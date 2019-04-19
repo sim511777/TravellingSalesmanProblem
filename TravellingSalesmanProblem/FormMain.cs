@@ -156,5 +156,10 @@ namespace TravellingSalesmanProblem {
             float calcDist = CalcFullDist();
             this.Log(string.Format("Nearest Neighbor Dist : {0}", calcDist));
         }
+
+        private void button1_Click(object sender, EventArgs e) {
+            string str = TspCities.Run();
+            this.Log(str);
+        }
     }
 }
