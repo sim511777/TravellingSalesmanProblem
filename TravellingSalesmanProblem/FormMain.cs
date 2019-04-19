@@ -19,6 +19,7 @@ namespace TravellingSalesmanProblem {
         int bw = 1000;
         int bh = 1000;
         PointF[] points = { PointF.Empty };
+        long[,] dists = new long[,]{ { 0 } };
         int[] visitOrder = { 0 };
 
         private void btnResetZoom_Click(object sender, EventArgs e) {
@@ -87,11 +88,31 @@ namespace TravellingSalesmanProblem {
                 this.points[i] = new PointF((float)(rnd.NextDouble() * (bw-1)), (float)(rnd.NextDouble() * (bh-1)));
             }
 
+            this.CalcDistTable();
             this.SortUpdate();
         }
 
         private void rdoNoSort_Click(object sender, EventArgs e) {
             this.SortUpdate();
+        }
+
+        private void CalcDistTable() {
+            double Dist(PointF pt1, PointF pt2) {
+                float dx = (pt2.X-pt1.X);
+                float dy = (pt2.Y-pt1.Y);
+                return Math.Sqrt(dx * dx + dy * dy);
+            }
+
+            int num = this.points.Length;
+            this.dists = new long[num, num];
+            for (int i=0; i<num; i++) {
+                var ptI = this.points[i];
+                for (int j=0; j<num; j++) {
+                    var ptJ = this.points[j];
+                    this.dists[i,j] = (long)(Dist(ptI, ptJ) * 1000);
+                    this.dists[j,i] = (long)(Dist(ptJ, ptI) * 1000);
+                }
+            }
         }
 
         private void SortUpdate() {
@@ -106,28 +127,20 @@ namespace TravellingSalesmanProblem {
             this.pbxDraw.Invalidate();
         }
 
-        private float Dist(PointF pt1, PointF pt2) {
-            float dx = (pt2.X-pt1.X);
-            float dy = (pt2.Y-pt1.Y);
-            return (float)Math.Sqrt(dx * dx + dy * dy);
-        }
-
-        private float CalcFullDist() {
-            float fullDist = 0;
+        private float CalcRouteDist() {
+            long fullDist = 0;
             for (int i = 0; i < this.visitOrder.Length; i++) {
                 var ptIdx = this.visitOrder[i];
-                var pt = this.points[ptIdx];
                 var ptIdxNext = this.visitOrder[(i+1) % this.visitOrder.Length];
-                var ptNext = this.points[ptIdxNext];
-                fullDist += Dist(pt, ptNext);
+                fullDist += this.dists[ptIdx, ptIdxNext];
             }
-            return fullDist;
+            return fullDist * 0.001f ;
         }
 
         private void NoSort() {
             this.visitOrder = Enumerable.Range(0, this.points.Length).ToArray();
 
-            float calcDist = CalcFullDist();
+            float calcDist = CalcRouteDist();
             this.Log(string.Format("No Sort Dist          : {0}", calcDist));
         }
 
@@ -136,13 +149,11 @@ namespace TravellingSalesmanProblem {
 
             for (int i = 0; i < visitOrder.Length - 2; i++) {
                 var currPtIdx = visitOrder[i];
-                var currPt = this.points[currPtIdx];
                 var minDist = float.MaxValue;
                 var minIdx = -1;
                 for (int j = i + 1; j < visitOrder.Length; j++) {
                     var otherPtIdx = visitOrder[j];
-                    var otherPt = this.points[otherPtIdx];
-                    var dist = Dist(currPt, otherPt);
+                    var dist = this.dists[currPtIdx, otherPtIdx];
                     if (dist < minDist) {
                         minDist = dist;
                         minIdx = j;
@@ -153,7 +164,7 @@ namespace TravellingSalesmanProblem {
                 visitOrder[minIdx] = temp;
             }
 
-            float calcDist = CalcFullDist();
+            float calcDist = CalcRouteDist();
             this.Log(string.Format("Nearest Neighbor Dist : {0}", calcDist));
         }
 
