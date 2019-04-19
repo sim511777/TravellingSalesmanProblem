@@ -118,12 +118,21 @@ namespace TravellingSalesmanProblem {
         private void SortUpdate() {
             var t0 = Stopwatch.GetTimestamp();
             if (this.rdoNoSort.Checked) {
+                this.Log("==== No Sort ====");
                 this.NoSort();
             } else if (this.rdoNearestNeighbor.Checked) {
+                this.Log("==== Nearest Neighbor ====");
                 this.SortNearestNeighbor();
+            } else if (this.rdoGoogleRoute.Checked) {
+                this.Log("==== Google Route ====");
+                this.SortGoogleRoute();
             }
             var ms = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
-            this.Log(string.Format("sort time {0}ms", ms));
+            this.Log(string.Format("Calc Time  : {0}ms", ms));
+            
+            float calcDist = CalcRouteDist();
+            this.Log(string.Format("Route Dist : {0}", calcDist));
+
             this.pbxDraw.Invalidate();
         }
 
@@ -139,9 +148,6 @@ namespace TravellingSalesmanProblem {
 
         private void NoSort() {
             this.visitOrder = Enumerable.Range(0, this.points.Length).ToArray();
-
-            float calcDist = CalcRouteDist();
-            this.Log(string.Format("No Sort Dist          : {0}", calcDist));
         }
 
         private void SortNearestNeighbor() {
@@ -163,14 +169,10 @@ namespace TravellingSalesmanProblem {
                 visitOrder[i + 1] = visitOrder[minIdx];
                 visitOrder[minIdx] = temp;
             }
-
-            float calcDist = CalcRouteDist();
-            this.Log(string.Format("Nearest Neighbor Dist : {0}", calcDist));
         }
 
-        private void button1_Click(object sender, EventArgs e) {
-            string str = TspCities.Run();
-            this.Log(str);
+        private void SortGoogleRoute() {
+            this.visitOrder = TspCities.Run(this.dists, 1, 0);
         }
     }
 }

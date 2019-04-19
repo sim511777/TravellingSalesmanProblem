@@ -40,7 +40,7 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.pbxDraw = new ShimLib.ZoomPictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.rdoGoogleRoute = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.grpSorting.SuspendLayout();
@@ -71,7 +71,6 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.btnFitZoom);
             this.panel2.Controls.Add(this.btnResetZoom);
             this.panel2.Controls.Add(this.grpSorting);
@@ -109,6 +108,7 @@
             // 
             // grpSorting
             // 
+            this.grpSorting.Controls.Add(this.rdoGoogleRoute);
             this.grpSorting.Controls.Add(this.rdoNearestNeighbor);
             this.grpSorting.Controls.Add(this.rdoNoSort);
             this.grpSorting.Location = new System.Drawing.Point(5, 76);
@@ -126,7 +126,6 @@
             this.rdoNearestNeighbor.Name = "rdoNearestNeighbor";
             this.rdoNearestNeighbor.Size = new System.Drawing.Size(122, 16);
             this.rdoNearestNeighbor.TabIndex = 0;
-            this.rdoNearestNeighbor.TabStop = true;
             this.rdoNearestNeighbor.Text = "Neighbor Nearest";
             this.rdoNearestNeighbor.UseVisualStyleBackColor = true;
             this.rdoNearestNeighbor.Click += new System.EventHandler(this.rdoNoSort_Click);
@@ -269,15 +268,16 @@
             this.panel3.Size = new System.Drawing.Size(600, 600);
             this.panel3.TabIndex = 3;
             // 
-            // button1
+            // rdoGoogleRoute
             // 
-            this.button1.Location = new System.Drawing.Point(156, 32);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.rdoGoogleRoute.AutoSize = true;
+            this.rdoGoogleRoute.Location = new System.Drawing.Point(6, 64);
+            this.rdoGoogleRoute.Name = "rdoGoogleRoute";
+            this.rdoGoogleRoute.Size = new System.Drawing.Size(99, 16);
+            this.rdoGoogleRoute.TabIndex = 0;
+            this.rdoGoogleRoute.Text = "Google Route";
+            this.rdoGoogleRoute.UseVisualStyleBackColor = true;
+            this.rdoGoogleRoute.Click += new System.EventHandler(this.rdoNoSort_Click);
             // 
             // FormMain
             // 
@@ -320,7 +320,7 @@
         private System.Windows.Forms.Button btnResetZoom;
         private System.Windows.Forms.Button btnFitZoom;
       private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RadioButton rdoGoogleRoute;
     }
 }
 
