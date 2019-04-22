@@ -40,7 +40,7 @@ namespace TravellingSalesmanProblem {
             return order.ToArray();
         }
 
-        public static int[] Run(long[,] DistanceMatrix, int VehicleNumber, int Depot) {
+        public static int[] Run(long[,] DistanceMatrix, int VehicleNumber, int Depot, FirstSolutionStrategy.Types.Value strategy) {
             // Instantiate the data problem.
             // Create Routing Index Manager
             RoutingIndexManager manager = new RoutingIndexManager(
@@ -65,7 +65,7 @@ namespace TravellingSalesmanProblem {
 
             // Setting first solution heuristic.
             RoutingSearchParameters searchParameters = operations_research_constraint_solver.DefaultRoutingSearchParameters();
-            searchParameters.FirstSolutionStrategy = FirstSolutionStrategy.Types.Value.PathCheapestArc;
+            searchParameters.FirstSolutionStrategy = strategy;
 
             // Solve the problem.
             Assignment solution = routing.SolveWithParameters(searchParameters);

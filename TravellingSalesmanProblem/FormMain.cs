@@ -8,11 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Google.OrTools.ConstraintSolver;
 
 namespace TravellingSalesmanProblem {
     public partial class FormMain : Form {
         public FormMain() {
             InitializeComponent();
+            var enumValues = Enum.GetValues(typeof(FirstSolutionStrategy.Types.Value));
+            this.cbxFirstSolutionStrategy.DataSource = enumValues;
+            this.cbxFirstSolutionStrategy.SelectedItem = FirstSolutionStrategy.Types.Value.PathCheapestArc;
             this.pbxDraw.ZoomToRect(0, 0, bw, bh);
         }
         
@@ -89,11 +93,20 @@ namespace TravellingSalesmanProblem {
             }
 
             this.CalcDistTable();
-            this.SortUpdate();
+
+            try {
+                this.SortUpdate();
+            } catch (Exception ex) {
+                this.Log(ex.ToString());
+            }
         }
 
         private void rdoNoSort_Click(object sender, EventArgs e) {
-            this.SortUpdate();
+            try {
+                this.SortUpdate();
+            } catch (Exception ex) {
+                this.Log(ex.ToString());
+            }
         }
 
         private void CalcDistTable() {
@@ -172,7 +185,16 @@ namespace TravellingSalesmanProblem {
         }
 
         private void SortGoogleRoute() {
-            this.visitOrder = TspCities.Run(this.dists, 1, 0);
+            var strategy = this.cbxFirstSolutionStrategy.SelectedItem;
+            this.visitOrder = TspCities.Run(this.dists, 1, 0, (FirstSolutionStrategy.Types.Value)strategy);
+        }
+
+        private void cbxFirstSolutionStrategy_SelectedIndexChanged(object sender, EventArgs e) {
+            try {
+                this.SortUpdate();
+            } catch (Exception ex) {
+                this.Log(ex.ToString());
+            }
         }
     }
 }

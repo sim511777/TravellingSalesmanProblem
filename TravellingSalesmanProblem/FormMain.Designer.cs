@@ -29,6 +29,7 @@
             this.btnFitZoom = new System.Windows.Forms.Button();
             this.btnResetZoom = new System.Windows.Forms.Button();
             this.grpSorting = new System.Windows.Forms.GroupBox();
+            this.rdoGoogleRoute = new System.Windows.Forms.RadioButton();
             this.rdoNearestNeighbor = new System.Windows.Forms.RadioButton();
             this.rdoNoSort = new System.Windows.Forms.RadioButton();
             this.btnClearLog = new System.Windows.Forms.Button();
@@ -38,9 +39,10 @@
             this.chkShowNumber = new System.Windows.Forms.CheckBox();
             this.chkFixedSeed = new System.Windows.Forms.CheckBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.pbxDraw = new ShimLib.ZoomPictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.rdoGoogleRoute = new System.Windows.Forms.RadioButton();
+            this.cbxFirstSolutionStrategy = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pbxDraw = new ShimLib.ZoomPictureBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.grpSorting.SuspendLayout();
@@ -108,6 +110,8 @@
             // 
             // grpSorting
             // 
+            this.grpSorting.Controls.Add(this.label1);
+            this.grpSorting.Controls.Add(this.cbxFirstSolutionStrategy);
             this.grpSorting.Controls.Add(this.rdoGoogleRoute);
             this.grpSorting.Controls.Add(this.rdoNearestNeighbor);
             this.grpSorting.Controls.Add(this.rdoNoSort);
@@ -118,6 +122,17 @@
             this.grpSorting.TabStop = false;
             this.grpSorting.Text = "Sorting";
             // 
+            // rdoGoogleRoute
+            // 
+            this.rdoGoogleRoute.AutoSize = true;
+            this.rdoGoogleRoute.Location = new System.Drawing.Point(6, 64);
+            this.rdoGoogleRoute.Name = "rdoGoogleRoute";
+            this.rdoGoogleRoute.Size = new System.Drawing.Size(99, 16);
+            this.rdoGoogleRoute.TabIndex = 0;
+            this.rdoGoogleRoute.Text = "Google Route";
+            this.rdoGoogleRoute.UseVisualStyleBackColor = true;
+            this.rdoGoogleRoute.Click += new System.EventHandler(this.rdoNoSort_Click);
+            // 
             // rdoNearestNeighbor
             // 
             this.rdoNearestNeighbor.AutoSize = true;
@@ -126,6 +141,7 @@
             this.rdoNearestNeighbor.Name = "rdoNearestNeighbor";
             this.rdoNearestNeighbor.Size = new System.Drawing.Size(122, 16);
             this.rdoNearestNeighbor.TabIndex = 0;
+            this.rdoNearestNeighbor.TabStop = true;
             this.rdoNearestNeighbor.Text = "Neighbor Nearest";
             this.rdoNearestNeighbor.UseVisualStyleBackColor = true;
             this.rdoNearestNeighbor.Click += new System.EventHandler(this.rdoNoSort_Click);
@@ -230,6 +246,35 @@
             this.splitter1.TabIndex = 1;
             this.splitter1.TabStop = false;
             // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.pbxDraw);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(600, 600);
+            this.panel3.TabIndex = 3;
+            // 
+            // cbxFirstSolutionStrategy
+            // 
+            this.cbxFirstSolutionStrategy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxFirstSolutionStrategy.FormattingEnabled = true;
+            this.cbxFirstSolutionStrategy.Location = new System.Drawing.Point(28, 98);
+            this.cbxFirstSolutionStrategy.Name = "cbxFirstSolutionStrategy";
+            this.cbxFirstSolutionStrategy.Size = new System.Drawing.Size(215, 20);
+            this.cbxFirstSolutionStrategy.TabIndex = 1;
+            this.cbxFirstSolutionStrategy.SelectedIndexChanged += new System.EventHandler(this.cbxFirstSolutionStrategy_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 83);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(120, 12);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "FirstSolutionStrategy";
+            // 
             // pbxDraw
             // 
             this.pbxDraw.AutoDrawCenterLine = true;
@@ -257,27 +302,6 @@
             this.pbxDraw.ZoomMin = 0.1F;
             this.pbxDraw.ZoomStep = 1.2F;
             this.pbxDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.pbxDraw_Paint);
-            // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.pbxDraw);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(600, 600);
-            this.panel3.TabIndex = 3;
-            // 
-            // rdoGoogleRoute
-            // 
-            this.rdoGoogleRoute.AutoSize = true;
-            this.rdoGoogleRoute.Location = new System.Drawing.Point(6, 64);
-            this.rdoGoogleRoute.Name = "rdoGoogleRoute";
-            this.rdoGoogleRoute.Size = new System.Drawing.Size(99, 16);
-            this.rdoGoogleRoute.TabIndex = 0;
-            this.rdoGoogleRoute.Text = "Google Route";
-            this.rdoGoogleRoute.UseVisualStyleBackColor = true;
-            this.rdoGoogleRoute.Click += new System.EventHandler(this.rdoNoSort_Click);
             // 
             // FormMain
             // 
@@ -321,6 +345,8 @@
         private System.Windows.Forms.Button btnFitZoom;
       private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.RadioButton rdoGoogleRoute;
+        private System.Windows.Forms.ComboBox cbxFirstSolutionStrategy;
+        private System.Windows.Forms.Label label1;
     }
 }
 
