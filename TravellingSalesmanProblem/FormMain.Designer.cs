@@ -28,8 +28,6 @@
             this.btnFitZoom = new System.Windows.Forms.Button();
             this.btnResetZoom = new System.Windows.Forms.Button();
             this.grpSorting = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbxFirstSolutionStrategy = new System.Windows.Forms.ComboBox();
             this.rdoGoogleRoute = new System.Windows.Forms.RadioButton();
             this.rdoNearestNeighbor = new System.Windows.Forms.RadioButton();
             this.rdoNoSort = new System.Windows.Forms.RadioButton();
@@ -44,6 +42,7 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.pbxDraw = new ShimLib.ZoomPictureBox();
+            this.grdPrm = new System.Windows.Forms.PropertyGrid();
             this.panel2.SuspendLayout();
             this.grpSorting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPoints)).BeginInit();
@@ -59,7 +58,7 @@
             this.tbxLog.Location = new System.Drawing.Point(0, 31);
             this.tbxLog.Multiline = true;
             this.tbxLog.Name = "tbxLog";
-            this.tbxLog.Size = new System.Drawing.Size(789, 199);
+            this.tbxLog.Size = new System.Drawing.Size(1023, 199);
             this.tbxLog.TabIndex = 5;
             // 
             // panel2
@@ -70,9 +69,9 @@
             this.panel2.Controls.Add(this.numPoints);
             this.panel2.Controls.Add(this.chkFixedSeed);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(517, 0);
+            this.panel2.Location = new System.Drawing.Point(516, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(274, 480);
+            this.panel2.Size = new System.Drawing.Size(509, 480);
             this.panel2.TabIndex = 6;
             // 
             // btnFitZoom
@@ -97,40 +96,19 @@
             // 
             // grpSorting
             // 
-            this.grpSorting.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.grpSorting.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpSorting.Controls.Add(this.label1);
-            this.grpSorting.Controls.Add(this.cbxFirstSolutionStrategy);
+            this.grpSorting.Controls.Add(this.grdPrm);
             this.grpSorting.Controls.Add(this.rdoGoogleRoute);
             this.grpSorting.Controls.Add(this.rdoNearestNeighbor);
             this.grpSorting.Controls.Add(this.rdoNoSort);
             this.grpSorting.Location = new System.Drawing.Point(5, 32);
             this.grpSorting.Name = "grpSorting";
-            this.grpSorting.Size = new System.Drawing.Size(261, 202);
+            this.grpSorting.Size = new System.Drawing.Size(496, 441);
             this.grpSorting.TabIndex = 5;
             this.grpSorting.TabStop = false;
             this.grpSorting.Text = "Sorting";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 83);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(120, 12);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "FirstSolutionStrategy";
-            // 
-            // cbxFirstSolutionStrategy
-            // 
-            this.cbxFirstSolutionStrategy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxFirstSolutionStrategy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxFirstSolutionStrategy.FormattingEnabled = true;
-            this.cbxFirstSolutionStrategy.Location = new System.Drawing.Point(28, 98);
-            this.cbxFirstSolutionStrategy.Name = "cbxFirstSolutionStrategy";
-            this.cbxFirstSolutionStrategy.Size = new System.Drawing.Size(227, 20);
-            this.cbxFirstSolutionStrategy.TabIndex = 1;
-            this.cbxFirstSolutionStrategy.SelectedIndexChanged += new System.EventHandler(this.cbxFirstSolutionStrategy_SelectedIndexChanged);
             // 
             // rdoGoogleRoute
             // 
@@ -170,7 +148,7 @@
             // btnClearLog
             // 
             this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearLog.Location = new System.Drawing.Point(714, 3);
+            this.btnClearLog.Location = new System.Drawing.Point(948, 3);
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new System.Drawing.Size(72, 23);
             this.btnClearLog.TabIndex = 0;
@@ -240,7 +218,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(514, 480);
+            this.panel3.Size = new System.Drawing.Size(513, 480);
             this.panel3.TabIndex = 3;
             // 
             // panel4
@@ -251,7 +229,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 483);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(791, 232);
+            this.panel4.Size = new System.Drawing.Size(1025, 232);
             this.panel4.TabIndex = 3;
             // 
             // panel5
@@ -263,7 +241,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(789, 31);
+            this.panel5.Size = new System.Drawing.Size(1023, 31);
             this.panel5.TabIndex = 6;
             // 
             // splitter1
@@ -271,14 +249,14 @@
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.splitter1.Location = new System.Drawing.Point(0, 480);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(791, 3);
+            this.splitter1.Size = new System.Drawing.Size(1025, 3);
             this.splitter1.TabIndex = 4;
             this.splitter1.TabStop = false;
             // 
             // splitter2
             // 
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitter2.Location = new System.Drawing.Point(514, 0);
+            this.splitter2.Location = new System.Drawing.Point(513, 0);
             this.splitter2.Name = "splitter2";
             this.splitter2.Size = new System.Drawing.Size(3, 480);
             this.splitter2.TabIndex = 7;
@@ -302,7 +280,7 @@
             this.pbxDraw.Location = new System.Drawing.Point(0, 0);
             this.pbxDraw.Name = "pbxDraw";
             this.pbxDraw.Pan = new System.Drawing.SizeF(0F, 0F);
-            this.pbxDraw.Size = new System.Drawing.Size(512, 478);
+            this.pbxDraw.Size = new System.Drawing.Size(511, 478);
             this.pbxDraw.TabIndex = 2;
             this.pbxDraw.Text = "zoomPictureBox1";
             this.pbxDraw.UseDrawPixelValue = true;
@@ -312,11 +290,25 @@
             this.pbxDraw.ZoomStep = 1.2F;
             this.pbxDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.pbxDraw_Paint);
             // 
+            // grdPrm
+            // 
+            this.grdPrm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grdPrm.HelpVisible = false;
+            this.grdPrm.Location = new System.Drawing.Point(6, 86);
+            this.grdPrm.Name = "grdPrm";
+            this.grdPrm.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.grdPrm.Size = new System.Drawing.Size(484, 349);
+            this.grdPrm.TabIndex = 36;
+            this.grdPrm.ToolbarVisible = false;
+            this.grdPrm.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.grdPrm_PropertyValueChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(791, 715);
+            this.ClientSize = new System.Drawing.Size(1025, 715);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.splitter2);
             this.Controls.Add(this.panel2);
@@ -354,12 +346,11 @@
         private System.Windows.Forms.Button btnFitZoom;
       private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.RadioButton rdoGoogleRoute;
-        private System.Windows.Forms.ComboBox cbxFirstSolutionStrategy;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Splitter splitter2;
+        private System.Windows.Forms.PropertyGrid grdPrm;
     }
 }
 

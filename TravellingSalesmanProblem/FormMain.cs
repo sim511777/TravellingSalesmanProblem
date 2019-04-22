@@ -14,9 +14,8 @@ namespace TravellingSalesmanProblem {
     public partial class FormMain : Form {
         public FormMain() {
             InitializeComponent();
-            var enumValues = Enum.GetValues(typeof(FirstSolutionStrategy.Types.Value));
-            this.cbxFirstSolutionStrategy.DataSource = enumValues;
-            this.cbxFirstSolutionStrategy.SelectedItem = FirstSolutionStrategy.Types.Value.PathCheapestArc;
+            RoutingSearchParameters srcPrms = operations_research_constraint_solver.DefaultRoutingSearchParameters();
+            this.grdPrm.SelectedObject = srcPrms;
             this.pbxDraw.ZoomToRect(0, 0, bw, bh);
         }
         
@@ -97,6 +96,10 @@ namespace TravellingSalesmanProblem {
             this.SortUpdate();
         }
 
+        private void grdPrm_PropertyValueChanged(object s, PropertyValueChangedEventArgs e) {
+            this.SortUpdate();
+        }
+
         private void CalcDistTable() {
             double Dist(PointF pt1, PointF pt2) {
                 float dx = (pt2.X-pt1.X);
@@ -127,10 +130,10 @@ namespace TravellingSalesmanProblem {
                     this.Log("==== Nearest Neighbor ====");
                     this.SortNearestNeighbor();
                 } else if (this.rdoGoogleRoute.Checked) {
-                    var strategy = (FirstSolutionStrategy.Types.Value)this.cbxFirstSolutionStrategy.SelectedItem;
-                    string msg = string.Format("==== Google Route ({0}) ====", strategy);
+                    string msg = string.Format("==== Google Route ====");
                     this.Log(msg);
-                    this.SortGoogleRoute(strategy);
+                    RoutingSearchParameters srcPrms = (RoutingSearchParameters)this.grdPrm.SelectedObject;
+                    this.SortGoogleRoute(srcPrms);
                 }
             } catch (Exception ex) {
                 this.visitOrder = new int[0];
@@ -181,12 +184,8 @@ namespace TravellingSalesmanProblem {
             }
         }
 
-        private void SortGoogleRoute(FirstSolutionStrategy.Types.Value strategy) {
-            this.visitOrder = TspCities.Run(this.dists, 1, 0, strategy);
-        }
-
-        private void cbxFirstSolutionStrategy_SelectedIndexChanged(object sender, EventArgs e) {
-            this.SortUpdate();
+        private void SortGoogleRoute(RoutingSearchParameters srcPrms) {
+            this.visitOrder = TspCities.Run(this.dists, 1, 0, srcPrms);
         }
     }
 }
