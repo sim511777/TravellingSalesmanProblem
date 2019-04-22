@@ -23,74 +23,61 @@
         /// 이 메서드의 내용을 코드 편집기로 수정하지 마세요.
         /// </summary>
         private void InitializeComponent() {
-            this.panel1 = new System.Windows.Forms.Panel();
             this.tbxLog = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnFitZoom = new System.Windows.Forms.Button();
             this.btnResetZoom = new System.Windows.Forms.Button();
             this.grpSorting = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbxFirstSolutionStrategy = new System.Windows.Forms.ComboBox();
             this.rdoGoogleRoute = new System.Windows.Forms.RadioButton();
             this.rdoNearestNeighbor = new System.Windows.Forms.RadioButton();
             this.rdoNoSort = new System.Windows.Forms.RadioButton();
             this.btnClearLog = new System.Windows.Forms.Button();
             this.btnGetPoints = new System.Windows.Forms.Button();
             this.numPoints = new System.Windows.Forms.NumericUpDown();
-            this.chkShowLine = new System.Windows.Forms.CheckBox();
             this.chkShowNumber = new System.Windows.Forms.CheckBox();
             this.chkFixedSeed = new System.Windows.Forms.CheckBox();
-            this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.cbxFirstSolutionStrategy = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.splitter2 = new System.Windows.Forms.Splitter();
             this.pbxDraw = new ShimLib.ZoomPictureBox();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.grpSorting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPoints)).BeginInit();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.tbxLog);
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(603, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(267, 600);
-            this.panel1.TabIndex = 0;
             // 
             // tbxLog
             // 
             this.tbxLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbxLog.Font = new System.Drawing.Font("돋움체", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbxLog.Location = new System.Drawing.Point(0, 383);
+            this.tbxLog.Location = new System.Drawing.Point(0, 31);
             this.tbxLog.Multiline = true;
             this.tbxLog.Name = "tbxLog";
-            this.tbxLog.Size = new System.Drawing.Size(265, 215);
+            this.tbxLog.Size = new System.Drawing.Size(789, 199);
             this.tbxLog.TabIndex = 5;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnFitZoom);
-            this.panel2.Controls.Add(this.btnResetZoom);
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.grpSorting);
-            this.panel2.Controls.Add(this.btnClearLog);
             this.panel2.Controls.Add(this.btnGetPoints);
             this.panel2.Controls.Add(this.numPoints);
-            this.panel2.Controls.Add(this.chkShowLine);
-            this.panel2.Controls.Add(this.chkShowNumber);
             this.panel2.Controls.Add(this.chkFixedSeed);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(517, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(265, 383);
+            this.panel2.Size = new System.Drawing.Size(274, 480);
             this.panel2.TabIndex = 6;
             // 
             // btnFitZoom
             // 
-            this.btnFitZoom.Location = new System.Drawing.Point(93, 354);
+            this.btnFitZoom.Location = new System.Drawing.Point(210, 3);
             this.btnFitZoom.Name = "btnFitZoom";
             this.btnFitZoom.Size = new System.Drawing.Size(82, 23);
             this.btnFitZoom.TabIndex = 6;
@@ -100,7 +87,7 @@
             // 
             // btnResetZoom
             // 
-            this.btnResetZoom.Location = new System.Drawing.Point(5, 354);
+            this.btnResetZoom.Location = new System.Drawing.Point(122, 3);
             this.btnResetZoom.Name = "btnResetZoom";
             this.btnResetZoom.Size = new System.Drawing.Size(82, 23);
             this.btnResetZoom.TabIndex = 6;
@@ -110,17 +97,40 @@
             // 
             // grpSorting
             // 
+            this.grpSorting.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grpSorting.Controls.Add(this.label1);
             this.grpSorting.Controls.Add(this.cbxFirstSolutionStrategy);
             this.grpSorting.Controls.Add(this.rdoGoogleRoute);
             this.grpSorting.Controls.Add(this.rdoNearestNeighbor);
             this.grpSorting.Controls.Add(this.rdoNoSort);
-            this.grpSorting.Location = new System.Drawing.Point(5, 76);
+            this.grpSorting.Location = new System.Drawing.Point(5, 32);
             this.grpSorting.Name = "grpSorting";
-            this.grpSorting.Size = new System.Drawing.Size(249, 255);
+            this.grpSorting.Size = new System.Drawing.Size(261, 202);
             this.grpSorting.TabIndex = 5;
             this.grpSorting.TabStop = false;
             this.grpSorting.Text = "Sorting";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 83);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(120, 12);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "FirstSolutionStrategy";
+            // 
+            // cbxFirstSolutionStrategy
+            // 
+            this.cbxFirstSolutionStrategy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxFirstSolutionStrategy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxFirstSolutionStrategy.FormattingEnabled = true;
+            this.cbxFirstSolutionStrategy.Location = new System.Drawing.Point(28, 98);
+            this.cbxFirstSolutionStrategy.Name = "cbxFirstSolutionStrategy";
+            this.cbxFirstSolutionStrategy.Size = new System.Drawing.Size(227, 20);
+            this.cbxFirstSolutionStrategy.TabIndex = 1;
+            this.cbxFirstSolutionStrategy.SelectedIndexChanged += new System.EventHandler(this.cbxFirstSolutionStrategy_SelectedIndexChanged);
             // 
             // rdoGoogleRoute
             // 
@@ -159,7 +169,8 @@
             // 
             // btnClearLog
             // 
-            this.btnClearLog.Location = new System.Drawing.Point(181, 354);
+            this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearLog.Location = new System.Drawing.Point(714, 3);
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new System.Drawing.Size(72, 23);
             this.btnClearLog.TabIndex = 0;
@@ -199,25 +210,10 @@
             0,
             0});
             // 
-            // chkShowLine
-            // 
-            this.chkShowLine.AutoSize = true;
-            this.chkShowLine.Checked = true;
-            this.chkShowLine.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowLine.Location = new System.Drawing.Point(3, 54);
-            this.chkShowLine.Name = "chkShowLine";
-            this.chkShowLine.Size = new System.Drawing.Size(84, 16);
-            this.chkShowLine.TabIndex = 4;
-            this.chkShowLine.Text = "Show Line";
-            this.chkShowLine.UseVisualStyleBackColor = true;
-            this.chkShowLine.CheckedChanged += new System.EventHandler(this.chkShowNumber_CheckedChanged);
-            // 
             // chkShowNumber
             // 
             this.chkShowNumber.AutoSize = true;
-            this.chkShowNumber.Checked = true;
-            this.chkShowNumber.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowNumber.Location = new System.Drawing.Point(3, 32);
+            this.chkShowNumber.Location = new System.Drawing.Point(11, 7);
             this.chkShowNumber.Name = "chkShowNumber";
             this.chkShowNumber.Size = new System.Drawing.Size(105, 16);
             this.chkShowNumber.TabIndex = 4;
@@ -237,15 +233,6 @@
             this.chkFixedSeed.Text = "Seed Fix";
             this.chkFixedSeed.UseVisualStyleBackColor = true;
             // 
-            // splitter1
-            // 
-            this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitter1.Location = new System.Drawing.Point(600, 0);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 600);
-            this.splitter1.TabIndex = 1;
-            this.splitter1.TabStop = false;
-            // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -253,27 +240,49 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(600, 600);
+            this.panel3.Size = new System.Drawing.Size(514, 480);
             this.panel3.TabIndex = 3;
             // 
-            // cbxFirstSolutionStrategy
+            // panel4
             // 
-            this.cbxFirstSolutionStrategy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxFirstSolutionStrategy.FormattingEnabled = true;
-            this.cbxFirstSolutionStrategy.Location = new System.Drawing.Point(28, 98);
-            this.cbxFirstSolutionStrategy.Name = "cbxFirstSolutionStrategy";
-            this.cbxFirstSolutionStrategy.Size = new System.Drawing.Size(215, 20);
-            this.cbxFirstSolutionStrategy.TabIndex = 1;
-            this.cbxFirstSolutionStrategy.SelectedIndexChanged += new System.EventHandler(this.cbxFirstSolutionStrategy_SelectedIndexChanged);
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.tbxLog);
+            this.panel4.Controls.Add(this.panel5);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 483);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(791, 232);
+            this.panel4.TabIndex = 3;
             // 
-            // label1
+            // panel5
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 83);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(120, 12);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "FirstSolutionStrategy";
+            this.panel5.Controls.Add(this.btnFitZoom);
+            this.panel5.Controls.Add(this.btnClearLog);
+            this.panel5.Controls.Add(this.btnResetZoom);
+            this.panel5.Controls.Add(this.chkShowNumber);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(789, 31);
+            this.panel5.TabIndex = 6;
+            // 
+            // splitter1
+            // 
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitter1.Location = new System.Drawing.Point(0, 480);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(791, 3);
+            this.splitter1.TabIndex = 4;
+            this.splitter1.TabStop = false;
+            // 
+            // splitter2
+            // 
+            this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.splitter2.Location = new System.Drawing.Point(514, 0);
+            this.splitter2.Name = "splitter2";
+            this.splitter2.Size = new System.Drawing.Size(3, 480);
+            this.splitter2.TabIndex = 7;
+            this.splitter2.TabStop = false;
             // 
             // pbxDraw
             // 
@@ -293,7 +302,7 @@
             this.pbxDraw.Location = new System.Drawing.Point(0, 0);
             this.pbxDraw.Name = "pbxDraw";
             this.pbxDraw.Pan = new System.Drawing.SizeF(0F, 0F);
-            this.pbxDraw.Size = new System.Drawing.Size(598, 598);
+            this.pbxDraw.Size = new System.Drawing.Size(512, 478);
             this.pbxDraw.TabIndex = 2;
             this.pbxDraw.Text = "zoomPictureBox1";
             this.pbxDraw.UseDrawPixelValue = true;
@@ -307,32 +316,32 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(870, 600);
+            this.ClientSize = new System.Drawing.Size(791, 715);
             this.Controls.Add(this.panel3);
+            this.Controls.Add(this.splitter2);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.splitter1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel4);
             this.Name = "FormMain";
             this.Text = "Form1";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.grpSorting.ResumeLayout(false);
             this.grpSorting.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPoints)).EndInit();
             this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.NumericUpDown numPoints;
         private System.Windows.Forms.Button btnGetPoints;
-        private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.CheckBox chkFixedSeed;
-        private System.Windows.Forms.CheckBox chkShowLine;
         private System.Windows.Forms.CheckBox chkShowNumber;
         private System.Windows.Forms.TextBox tbxLog;
         private System.Windows.Forms.Panel panel2;
@@ -347,6 +356,10 @@
         private System.Windows.Forms.RadioButton rdoGoogleRoute;
         private System.Windows.Forms.ComboBox cbxFirstSolutionStrategy;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.Splitter splitter2;
     }
 }
 

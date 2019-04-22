@@ -53,19 +53,16 @@ namespace TravellingSalesmanProblem {
             var rect = new Rectangle(0, 0, bw, bh);
             g.FillRectangle(Brushes.White, this.pbxDraw.RealToDrawRect(rect));
 
-            bool showLine = this.chkShowLine.Checked;
             bool showNumber = this.chkShowNumber.Checked;
             using (var font = SystemFonts.DefaultFont) {
                 for (int i = 0; i < this.visitOrder.Length; i++) {
                     var ptIdx = this.visitOrder[i];
                     var pt = this.points[ptIdx];
-                    
+
                     // 선 표시
-                    if (showLine) {
-                        var ptIdxNext = this.visitOrder[(i+1) % this.visitOrder.Length];
-                        var ptNext = this.points[ptIdxNext];
-                        g.DrawLine(Pens.Blue, this.pbxDraw.RealToDraw(pt), this.pbxDraw.RealToDraw(ptNext));
-                    }
+                    var ptIdxNext = this.visitOrder[(i+1) % this.visitOrder.Length];
+                    var ptNext = this.points[ptIdxNext];
+                    g.DrawLine(Pens.Blue, this.pbxDraw.RealToDraw(pt), this.pbxDraw.RealToDraw(ptNext));
 
                     // 점 표시
                     FillSquare(g, Brushes.Red, this.pbxDraw.RealToDraw(pt), 4);
@@ -93,20 +90,11 @@ namespace TravellingSalesmanProblem {
             }
 
             this.CalcDistTable();
-
-            try {
-                this.SortUpdate();
-            } catch (Exception ex) {
-                this.Log(ex.ToString());
-            }
+            this.SortUpdate();
         }
 
         private void rdoNoSort_Click(object sender, EventArgs e) {
-            try {
-                this.SortUpdate();
-            } catch (Exception ex) {
-                this.Log(ex.ToString());
-            }
+            this.SortUpdate();
         }
 
         private void CalcDistTable() {
@@ -130,19 +118,28 @@ namespace TravellingSalesmanProblem {
 
         private void SortUpdate() {
             var t0 = Stopwatch.GetTimestamp();
-            if (this.rdoNoSort.Checked) {
-                this.Log("==== No Sort ====");
-                this.NoSort();
-            } else if (this.rdoNearestNeighbor.Checked) {
-                this.Log("==== Nearest Neighbor ====");
-                this.SortNearestNeighbor();
-            } else if (this.rdoGoogleRoute.Checked) {
-                this.Log("==== Google Route ====");
-                this.SortGoogleRoute();
+            
+            try {
+                if (this.rdoNoSort.Checked) {
+                    this.Log("==== No Sort ====");
+                    this.NoSort();
+                } else if (this.rdoNearestNeighbor.Checked) {
+                    this.Log("==== Nearest Neighbor ====");
+                    this.SortNearestNeighbor();
+                } else if (this.rdoGoogleRoute.Checked) {
+                    var strategy = (FirstSolutionStrategy.Types.Value)this.cbxFirstSolutionStrategy.SelectedItem;
+                    string msg = string.Format("==== Google Route ({0}) ====", strategy);
+                    this.Log(msg);
+                    this.SortGoogleRoute(strategy);
+                }
+            } catch (Exception ex) {
+                this.visitOrder = new int[0];
+                this.Log(ex.ToString());
             }
+            
             var ms = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
             this.Log(string.Format("Calc Time  : {0}ms", ms));
-            
+
             float calcDist = CalcRouteDist();
             this.Log(string.Format("Route Dist : {0}", calcDist));
 
@@ -184,17 +181,12 @@ namespace TravellingSalesmanProblem {
             }
         }
 
-        private void SortGoogleRoute() {
-            var strategy = this.cbxFirstSolutionStrategy.SelectedItem;
-            this.visitOrder = TspCities.Run(this.dists, 1, 0, (FirstSolutionStrategy.Types.Value)strategy);
+        private void SortGoogleRoute(FirstSolutionStrategy.Types.Value strategy) {
+            this.visitOrder = TspCities.Run(this.dists, 1, 0, strategy);
         }
 
         private void cbxFirstSolutionStrategy_SelectedIndexChanged(object sender, EventArgs e) {
-            try {
-                this.SortUpdate();
-            } catch (Exception ex) {
-                this.Log(ex.ToString());
-            }
+            this.SortUpdate();
         }
     }
 }
