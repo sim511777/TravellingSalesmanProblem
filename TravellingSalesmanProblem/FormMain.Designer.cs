@@ -28,6 +28,10 @@
             this.grpSorting = new System.Windows.Forms.GroupBox();
             this.grdPrm = new System.Windows.Forms.PropertyGrid();
             this.rdoGoogleRoute = new System.Windows.Forms.RadioButton();
+            this.rdo2OptNative = new System.Windows.Forms.RadioButton();
+            this.rdo2Opt = new System.Windows.Forms.RadioButton();
+            this.rdoNearestNeighbor2OptNative = new System.Windows.Forms.RadioButton();
+            this.rdoNearestNeighbor2Opt = new System.Windows.Forms.RadioButton();
             this.rdoNearestNeighbor = new System.Windows.Forms.RadioButton();
             this.rdoNoSort = new System.Windows.Forms.RadioButton();
             this.btnGetPoints = new System.Windows.Forms.Button();
@@ -38,18 +42,20 @@
             this.btnClearLog = new System.Windows.Forms.Button();
             this.chkShowNumber = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.pbxDraw = new ShimLib.ZoomPictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.rdoNearestNeighbor2Opt = new System.Windows.Forms.RadioButton();
-            this.pbxDraw = new ShimLib.ZoomPictureBox();
+            this.btnBenchmark = new System.Windows.Forms.Button();
+            this.numBenchMark = new System.Windows.Forms.NumericUpDown();
             this.panel2.SuspendLayout();
             this.grpSorting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPoints)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBenchMark)).BeginInit();
             this.SuspendLayout();
             // 
             // tbxLog
@@ -65,14 +71,16 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.btnBenchmark);
             this.panel2.Controls.Add(this.grpSorting);
             this.panel2.Controls.Add(this.btnGetPoints);
+            this.panel2.Controls.Add(this.numBenchMark);
             this.panel2.Controls.Add(this.numPoints);
             this.panel2.Controls.Add(this.chkFixedSeed);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(516, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(509, 480);
+            this.panel2.Size = new System.Drawing.Size(509, 590);
             this.panel2.TabIndex = 6;
             // 
             // grpSorting
@@ -82,12 +90,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpSorting.Controls.Add(this.grdPrm);
             this.grpSorting.Controls.Add(this.rdoGoogleRoute);
+            this.grpSorting.Controls.Add(this.rdo2OptNative);
+            this.grpSorting.Controls.Add(this.rdo2Opt);
+            this.grpSorting.Controls.Add(this.rdoNearestNeighbor2OptNative);
             this.grpSorting.Controls.Add(this.rdoNearestNeighbor2Opt);
             this.grpSorting.Controls.Add(this.rdoNearestNeighbor);
             this.grpSorting.Controls.Add(this.rdoNoSort);
             this.grpSorting.Location = new System.Drawing.Point(5, 32);
             this.grpSorting.Name = "grpSorting";
-            this.grpSorting.Size = new System.Drawing.Size(496, 441);
+            this.grpSorting.Size = new System.Drawing.Size(496, 551);
             this.grpSorting.TabIndex = 5;
             this.grpSorting.TabStop = false;
             this.grpSorting.Text = "Sorting";
@@ -98,10 +109,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grdPrm.HelpVisible = false;
-            this.grdPrm.Location = new System.Drawing.Point(6, 111);
+            this.grdPrm.Location = new System.Drawing.Point(6, 174);
             this.grdPrm.Name = "grdPrm";
             this.grdPrm.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.grdPrm.Size = new System.Drawing.Size(484, 324);
+            this.grdPrm.Size = new System.Drawing.Size(484, 371);
             this.grdPrm.TabIndex = 36;
             this.grdPrm.ToolbarVisible = false;
             this.grdPrm.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.grdPrm_PropertyValueChanged);
@@ -109,13 +120,57 @@
             // rdoGoogleRoute
             // 
             this.rdoGoogleRoute.AutoSize = true;
-            this.rdoGoogleRoute.Location = new System.Drawing.Point(6, 86);
+            this.rdoGoogleRoute.Location = new System.Drawing.Point(6, 152);
             this.rdoGoogleRoute.Name = "rdoGoogleRoute";
             this.rdoGoogleRoute.Size = new System.Drawing.Size(99, 16);
             this.rdoGoogleRoute.TabIndex = 0;
             this.rdoGoogleRoute.Text = "Google Route";
             this.rdoGoogleRoute.UseVisualStyleBackColor = true;
             this.rdoGoogleRoute.Click += new System.EventHandler(this.rdoNoSort_Click);
+            // 
+            // rdo2OptNative
+            // 
+            this.rdo2OptNative.AutoSize = true;
+            this.rdo2OptNative.Location = new System.Drawing.Point(6, 86);
+            this.rdo2OptNative.Name = "rdo2OptNative";
+            this.rdo2OptNative.Size = new System.Drawing.Size(105, 16);
+            this.rdo2OptNative.TabIndex = 0;
+            this.rdo2OptNative.Text = "2-OPT(Native)";
+            this.rdo2OptNative.UseVisualStyleBackColor = true;
+            this.rdo2OptNative.Click += new System.EventHandler(this.rdoNoSort_Click);
+            // 
+            // rdo2Opt
+            // 
+            this.rdo2Opt.AutoSize = true;
+            this.rdo2Opt.Location = new System.Drawing.Point(6, 64);
+            this.rdo2Opt.Name = "rdo2Opt";
+            this.rdo2Opt.Size = new System.Drawing.Size(60, 16);
+            this.rdo2Opt.TabIndex = 0;
+            this.rdo2Opt.Text = "2-OPT";
+            this.rdo2Opt.UseVisualStyleBackColor = true;
+            this.rdo2Opt.Click += new System.EventHandler(this.rdoNoSort_Click);
+            // 
+            // rdoNearestNeighbor2OptNative
+            // 
+            this.rdoNearestNeighbor2OptNative.AutoSize = true;
+            this.rdoNearestNeighbor2OptNative.Location = new System.Drawing.Point(6, 130);
+            this.rdoNearestNeighbor2OptNative.Name = "rdoNearestNeighbor2OptNative";
+            this.rdoNearestNeighbor2OptNative.Size = new System.Drawing.Size(218, 16);
+            this.rdoNearestNeighbor2OptNative.TabIndex = 0;
+            this.rdoNearestNeighbor2OptNative.Text = "Neighbor Nearest + 2-OPT(Native)";
+            this.rdoNearestNeighbor2OptNative.UseVisualStyleBackColor = true;
+            this.rdoNearestNeighbor2OptNative.Click += new System.EventHandler(this.rdoNoSort_Click);
+            // 
+            // rdoNearestNeighbor2Opt
+            // 
+            this.rdoNearestNeighbor2Opt.AutoSize = true;
+            this.rdoNearestNeighbor2Opt.Location = new System.Drawing.Point(6, 108);
+            this.rdoNearestNeighbor2Opt.Name = "rdoNearestNeighbor2Opt";
+            this.rdoNearestNeighbor2Opt.Size = new System.Drawing.Size(173, 16);
+            this.rdoNearestNeighbor2Opt.TabIndex = 0;
+            this.rdoNearestNeighbor2Opt.Text = "Neighbor Nearest + 2-OPT";
+            this.rdoNearestNeighbor2Opt.UseVisualStyleBackColor = true;
+            this.rdoNearestNeighbor2Opt.Click += new System.EventHandler(this.rdoNoSort_Click);
             // 
             // rdoNearestNeighbor
             // 
@@ -125,6 +180,7 @@
             this.rdoNearestNeighbor.Name = "rdoNearestNeighbor";
             this.rdoNearestNeighbor.Size = new System.Drawing.Size(122, 16);
             this.rdoNearestNeighbor.TabIndex = 0;
+            this.rdoNearestNeighbor.TabStop = true;
             this.rdoNearestNeighbor.Text = "Neighbor Nearest";
             this.rdoNearestNeighbor.UseVisualStyleBackColor = true;
             this.rdoNearestNeighbor.Click += new System.EventHandler(this.rdoNoSort_Click);
@@ -233,60 +289,8 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(513, 480);
+            this.panel3.Size = new System.Drawing.Size(513, 590);
             this.panel3.TabIndex = 3;
-            // 
-            // panel4
-            // 
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.tbxLog);
-            this.panel4.Controls.Add(this.panel5);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 483);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1025, 232);
-            this.panel4.TabIndex = 3;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.btnFitZoom);
-            this.panel5.Controls.Add(this.btnClearLog);
-            this.panel5.Controls.Add(this.btnResetZoom);
-            this.panel5.Controls.Add(this.chkShowNumber);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(0, 0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1023, 31);
-            this.panel5.TabIndex = 6;
-            // 
-            // splitter1
-            // 
-            this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitter1.Location = new System.Drawing.Point(0, 480);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(1025, 3);
-            this.splitter1.TabIndex = 4;
-            this.splitter1.TabStop = false;
-            // 
-            // splitter2
-            // 
-            this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitter2.Location = new System.Drawing.Point(513, 0);
-            this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(3, 480);
-            this.splitter2.TabIndex = 7;
-            this.splitter2.TabStop = false;
-            // 
-            // rdoNearestNeighbor2Opt
-            // 
-            this.rdoNearestNeighbor2Opt.AutoSize = true;
-            this.rdoNearestNeighbor2Opt.Location = new System.Drawing.Point(6, 64);
-            this.rdoNearestNeighbor2Opt.Name = "rdoNearestNeighbor2Opt";
-            this.rdoNearestNeighbor2Opt.Size = new System.Drawing.Size(173, 16);
-            this.rdoNearestNeighbor2Opt.TabIndex = 0;
-            this.rdoNearestNeighbor2Opt.Text = "Neighbor Nearest + 2-OPT";
-            this.rdoNearestNeighbor2Opt.UseVisualStyleBackColor = true;
-            this.rdoNearestNeighbor2Opt.Click += new System.EventHandler(this.rdoNoSort_Click);
             // 
             // pbxDraw
             // 
@@ -306,7 +310,7 @@
             this.pbxDraw.Location = new System.Drawing.Point(0, 0);
             this.pbxDraw.Name = "pbxDraw";
             this.pbxDraw.Pan = new System.Drawing.SizeF(0F, 0F);
-            this.pbxDraw.Size = new System.Drawing.Size(511, 478);
+            this.pbxDraw.Size = new System.Drawing.Size(511, 588);
             this.pbxDraw.TabIndex = 2;
             this.pbxDraw.Text = "zoomPictureBox1";
             this.pbxDraw.UseDrawPixelValue = true;
@@ -316,11 +320,84 @@
             this.pbxDraw.ZoomStep = 1.2F;
             this.pbxDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.pbxDraw_Paint);
             // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.tbxLog);
+            this.panel4.Controls.Add(this.panel5);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 593);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1025, 232);
+            this.panel4.TabIndex = 3;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.btnFitZoom);
+            this.panel5.Controls.Add(this.btnClearLog);
+            this.panel5.Controls.Add(this.btnResetZoom);
+            this.panel5.Controls.Add(this.chkShowNumber);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(1023, 31);
+            this.panel5.TabIndex = 6;
+            // 
+            // splitter1
+            // 
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitter1.Location = new System.Drawing.Point(0, 590);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(1025, 3);
+            this.splitter1.TabIndex = 4;
+            this.splitter1.TabStop = false;
+            // 
+            // splitter2
+            // 
+            this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.splitter2.Location = new System.Drawing.Point(513, 0);
+            this.splitter2.Name = "splitter2";
+            this.splitter2.Size = new System.Drawing.Size(3, 590);
+            this.splitter2.TabIndex = 7;
+            this.splitter2.TabStop = false;
+            // 
+            // btnBenchmark
+            // 
+            this.btnBenchmark.Location = new System.Drawing.Point(290, 4);
+            this.btnBenchmark.Name = "btnBenchmark";
+            this.btnBenchmark.Size = new System.Drawing.Size(78, 23);
+            this.btnBenchmark.TabIndex = 6;
+            this.btnBenchmark.Text = "Benchmark";
+            this.btnBenchmark.UseVisualStyleBackColor = true;
+            this.btnBenchmark.Click += new System.EventHandler(this.btnBenchmark_Click);
+            // 
+            // numBenchMark
+            // 
+            this.numBenchMark.Location = new System.Drawing.Point(374, 5);
+            this.numBenchMark.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numBenchMark.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numBenchMark.Name = "numBenchMark";
+            this.numBenchMark.Size = new System.Drawing.Size(67, 21);
+            this.numBenchMark.TabIndex = 1;
+            this.numBenchMark.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1025, 715);
+            this.ClientSize = new System.Drawing.Size(1025, 825);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.splitter2);
             this.Controls.Add(this.panel2);
@@ -338,6 +415,7 @@
             this.panel4.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBenchMark)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -364,6 +442,11 @@
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.PropertyGrid grdPrm;
         private System.Windows.Forms.RadioButton rdoNearestNeighbor2Opt;
+        private System.Windows.Forms.RadioButton rdo2Opt;
+        private System.Windows.Forms.RadioButton rdo2OptNative;
+        private System.Windows.Forms.RadioButton rdoNearestNeighbor2OptNative;
+        private System.Windows.Forms.Button btnBenchmark;
+        private System.Windows.Forms.NumericUpDown numBenchMark;
     }
 }
 

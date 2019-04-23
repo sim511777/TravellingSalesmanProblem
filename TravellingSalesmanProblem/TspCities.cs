@@ -36,15 +36,14 @@ namespace TravellingSalesmanProblem {
                 order.Add(manager.IndexToNode((int)index));
                 index = solution.Value(routing.NextVar(index));
             }
-            order.Add(manager.IndexToNode((int)index));
             return order.ToArray();
         }
 
-        public static int[] Run(long[,] DistanceMatrix, int VehicleNumber, int Depot, RoutingSearchParameters searchParameters) {
+        public static int[] Run(long[] DistanceMatrix, int num, int VehicleNumber, int Depot, RoutingSearchParameters searchParameters) {
             // Instantiate the data problem.
             // Create Routing Index Manager
             RoutingIndexManager manager = new RoutingIndexManager(
-                DistanceMatrix.GetLength(0),
+                num,
                 VehicleNumber,
                 Depot);
 
@@ -56,7 +55,7 @@ namespace TravellingSalesmanProblem {
                     // Convert from routing variable Index to distance matrix NodeIndex.
                     var fromNode = manager.IndexToNode(fromIndex);
                     var toNode = manager.IndexToNode(toIndex);
-                    return DistanceMatrix[fromNode, toNode];
+                    return DistanceMatrix[fromNode * num +  toNode];
                 }
             );
 
