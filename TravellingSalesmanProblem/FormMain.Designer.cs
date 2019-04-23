@@ -25,24 +25,25 @@
         private void InitializeComponent() {
             this.tbxLog = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnFitZoom = new System.Windows.Forms.Button();
-            this.btnResetZoom = new System.Windows.Forms.Button();
             this.grpSorting = new System.Windows.Forms.GroupBox();
+            this.grdPrm = new System.Windows.Forms.PropertyGrid();
             this.rdoGoogleRoute = new System.Windows.Forms.RadioButton();
             this.rdoNearestNeighbor = new System.Windows.Forms.RadioButton();
             this.rdoNoSort = new System.Windows.Forms.RadioButton();
-            this.btnClearLog = new System.Windows.Forms.Button();
             this.btnGetPoints = new System.Windows.Forms.Button();
             this.numPoints = new System.Windows.Forms.NumericUpDown();
-            this.chkShowNumber = new System.Windows.Forms.CheckBox();
             this.chkFixedSeed = new System.Windows.Forms.CheckBox();
+            this.btnFitZoom = new System.Windows.Forms.Button();
+            this.btnResetZoom = new System.Windows.Forms.Button();
+            this.btnClearLog = new System.Windows.Forms.Button();
+            this.chkShowNumber = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.pbxDraw = new ShimLib.ZoomPictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.pbxDraw = new ShimLib.ZoomPictureBox();
-            this.grdPrm = new System.Windows.Forms.PropertyGrid();
+            this.rdoNearestNeighbor2Opt = new System.Windows.Forms.RadioButton();
             this.panel2.SuspendLayout();
             this.grpSorting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPoints)).BeginInit();
@@ -74,26 +75,6 @@
             this.panel2.Size = new System.Drawing.Size(509, 480);
             this.panel2.TabIndex = 6;
             // 
-            // btnFitZoom
-            // 
-            this.btnFitZoom.Location = new System.Drawing.Point(210, 3);
-            this.btnFitZoom.Name = "btnFitZoom";
-            this.btnFitZoom.Size = new System.Drawing.Size(82, 23);
-            this.btnFitZoom.TabIndex = 6;
-            this.btnFitZoom.Text = "Fit Zoom";
-            this.btnFitZoom.UseVisualStyleBackColor = true;
-            this.btnFitZoom.Click += new System.EventHandler(this.btnFitZoom_Click);
-            // 
-            // btnResetZoom
-            // 
-            this.btnResetZoom.Location = new System.Drawing.Point(122, 3);
-            this.btnResetZoom.Name = "btnResetZoom";
-            this.btnResetZoom.Size = new System.Drawing.Size(82, 23);
-            this.btnResetZoom.TabIndex = 6;
-            this.btnResetZoom.Text = "Reset Zoom";
-            this.btnResetZoom.UseVisualStyleBackColor = true;
-            this.btnResetZoom.Click += new System.EventHandler(this.btnResetZoom_Click);
-            // 
             // grpSorting
             // 
             this.grpSorting.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -101,6 +82,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpSorting.Controls.Add(this.grdPrm);
             this.grpSorting.Controls.Add(this.rdoGoogleRoute);
+            this.grpSorting.Controls.Add(this.rdoNearestNeighbor2Opt);
             this.grpSorting.Controls.Add(this.rdoNearestNeighbor);
             this.grpSorting.Controls.Add(this.rdoNoSort);
             this.grpSorting.Location = new System.Drawing.Point(5, 32);
@@ -110,10 +92,24 @@
             this.grpSorting.TabStop = false;
             this.grpSorting.Text = "Sorting";
             // 
+            // grdPrm
+            // 
+            this.grdPrm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grdPrm.HelpVisible = false;
+            this.grdPrm.Location = new System.Drawing.Point(6, 111);
+            this.grdPrm.Name = "grdPrm";
+            this.grdPrm.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.grdPrm.Size = new System.Drawing.Size(484, 324);
+            this.grdPrm.TabIndex = 36;
+            this.grdPrm.ToolbarVisible = false;
+            this.grdPrm.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.grdPrm_PropertyValueChanged);
+            // 
             // rdoGoogleRoute
             // 
             this.rdoGoogleRoute.AutoSize = true;
-            this.rdoGoogleRoute.Location = new System.Drawing.Point(6, 64);
+            this.rdoGoogleRoute.Location = new System.Drawing.Point(6, 86);
             this.rdoGoogleRoute.Name = "rdoGoogleRoute";
             this.rdoGoogleRoute.Size = new System.Drawing.Size(99, 16);
             this.rdoGoogleRoute.TabIndex = 0;
@@ -129,7 +125,6 @@
             this.rdoNearestNeighbor.Name = "rdoNearestNeighbor";
             this.rdoNearestNeighbor.Size = new System.Drawing.Size(122, 16);
             this.rdoNearestNeighbor.TabIndex = 0;
-            this.rdoNearestNeighbor.TabStop = true;
             this.rdoNearestNeighbor.Text = "Neighbor Nearest";
             this.rdoNearestNeighbor.UseVisualStyleBackColor = true;
             this.rdoNearestNeighbor.Click += new System.EventHandler(this.rdoNoSort_Click);
@@ -144,17 +139,6 @@
             this.rdoNoSort.Text = "No Sort";
             this.rdoNoSort.UseVisualStyleBackColor = true;
             this.rdoNoSort.Click += new System.EventHandler(this.rdoNoSort_Click);
-            // 
-            // btnClearLog
-            // 
-            this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearLog.Location = new System.Drawing.Point(948, 3);
-            this.btnClearLog.Name = "btnClearLog";
-            this.btnClearLog.Size = new System.Drawing.Size(72, 23);
-            this.btnClearLog.TabIndex = 0;
-            this.btnClearLog.Text = "Clear Log";
-            this.btnClearLog.UseVisualStyleBackColor = true;
-            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
             // 
             // btnGetPoints
             // 
@@ -188,17 +172,6 @@
             0,
             0});
             // 
-            // chkShowNumber
-            // 
-            this.chkShowNumber.AutoSize = true;
-            this.chkShowNumber.Location = new System.Drawing.Point(11, 7);
-            this.chkShowNumber.Name = "chkShowNumber";
-            this.chkShowNumber.Size = new System.Drawing.Size(105, 16);
-            this.chkShowNumber.TabIndex = 4;
-            this.chkShowNumber.Text = "Show Number";
-            this.chkShowNumber.UseVisualStyleBackColor = true;
-            this.chkShowNumber.CheckedChanged += new System.EventHandler(this.chkShowNumber_CheckedChanged);
-            // 
             // chkFixedSeed
             // 
             this.chkFixedSeed.AutoSize = true;
@@ -211,6 +184,48 @@
             this.chkFixedSeed.Text = "Seed Fix";
             this.chkFixedSeed.UseVisualStyleBackColor = true;
             // 
+            // btnFitZoom
+            // 
+            this.btnFitZoom.Location = new System.Drawing.Point(210, 3);
+            this.btnFitZoom.Name = "btnFitZoom";
+            this.btnFitZoom.Size = new System.Drawing.Size(82, 23);
+            this.btnFitZoom.TabIndex = 6;
+            this.btnFitZoom.Text = "Fit Zoom";
+            this.btnFitZoom.UseVisualStyleBackColor = true;
+            this.btnFitZoom.Click += new System.EventHandler(this.btnFitZoom_Click);
+            // 
+            // btnResetZoom
+            // 
+            this.btnResetZoom.Location = new System.Drawing.Point(122, 3);
+            this.btnResetZoom.Name = "btnResetZoom";
+            this.btnResetZoom.Size = new System.Drawing.Size(82, 23);
+            this.btnResetZoom.TabIndex = 6;
+            this.btnResetZoom.Text = "Reset Zoom";
+            this.btnResetZoom.UseVisualStyleBackColor = true;
+            this.btnResetZoom.Click += new System.EventHandler(this.btnResetZoom_Click);
+            // 
+            // btnClearLog
+            // 
+            this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearLog.Location = new System.Drawing.Point(948, 3);
+            this.btnClearLog.Name = "btnClearLog";
+            this.btnClearLog.Size = new System.Drawing.Size(72, 23);
+            this.btnClearLog.TabIndex = 0;
+            this.btnClearLog.Text = "Clear Log";
+            this.btnClearLog.UseVisualStyleBackColor = true;
+            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
+            // 
+            // chkShowNumber
+            // 
+            this.chkShowNumber.AutoSize = true;
+            this.chkShowNumber.Location = new System.Drawing.Point(11, 7);
+            this.chkShowNumber.Name = "chkShowNumber";
+            this.chkShowNumber.Size = new System.Drawing.Size(105, 16);
+            this.chkShowNumber.TabIndex = 4;
+            this.chkShowNumber.Text = "Show Number";
+            this.chkShowNumber.UseVisualStyleBackColor = true;
+            this.chkShowNumber.CheckedChanged += new System.EventHandler(this.chkShowNumber_CheckedChanged);
+            // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -220,6 +235,34 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(513, 480);
             this.panel3.TabIndex = 3;
+            // 
+            // pbxDraw
+            // 
+            this.pbxDraw.AutoDrawCenterLine = true;
+            this.pbxDraw.AutoDrawCursorPixelInfo = true;
+            this.pbxDraw.AxisXInvert = false;
+            this.pbxDraw.AxisXYFlip = false;
+            this.pbxDraw.AxisYInvert = false;
+            this.pbxDraw.BackColor = System.Drawing.Color.DarkGray;
+            this.pbxDraw.CenterLineColor = System.Drawing.Color.Yellow;
+            this.pbxDraw.CenterLineDotStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            this.pbxDraw.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbxDraw.DrawingImage = null;
+            this.pbxDraw.DrawPixelValueZoom = 20F;
+            this.pbxDraw.EnableMousePan = true;
+            this.pbxDraw.EnableWheelZoom = true;
+            this.pbxDraw.Location = new System.Drawing.Point(0, 0);
+            this.pbxDraw.Name = "pbxDraw";
+            this.pbxDraw.Pan = new System.Drawing.SizeF(0F, 0F);
+            this.pbxDraw.Size = new System.Drawing.Size(511, 478);
+            this.pbxDraw.TabIndex = 2;
+            this.pbxDraw.Text = "zoomPictureBox1";
+            this.pbxDraw.UseDrawPixelValue = true;
+            this.pbxDraw.Zoom = 1F;
+            this.pbxDraw.ZoomMax = 100F;
+            this.pbxDraw.ZoomMin = 0.1F;
+            this.pbxDraw.ZoomStep = 1.2F;
+            this.pbxDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.pbxDraw_Paint);
             // 
             // panel4
             // 
@@ -262,47 +305,16 @@
             this.splitter2.TabIndex = 7;
             this.splitter2.TabStop = false;
             // 
-            // pbxDraw
+            // rdoNearestNeighbor2Opt
             // 
-            this.pbxDraw.AutoDrawCenterLine = true;
-            this.pbxDraw.AutoDrawCursorPixelInfo = true;
-            this.pbxDraw.AxisXInvert = false;
-            this.pbxDraw.AxisXYFlip = false;
-            this.pbxDraw.AxisYInvert = false;
-            this.pbxDraw.BackColor = System.Drawing.Color.DarkGray;
-            this.pbxDraw.CenterLineColor = System.Drawing.Color.Yellow;
-            this.pbxDraw.CenterLineDotStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            this.pbxDraw.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbxDraw.DrawingImage = null;
-            this.pbxDraw.DrawPixelValueZoom = 20F;
-            this.pbxDraw.EnableMousePan = true;
-            this.pbxDraw.EnableWheelZoom = true;
-            this.pbxDraw.Location = new System.Drawing.Point(0, 0);
-            this.pbxDraw.Name = "pbxDraw";
-            this.pbxDraw.Pan = new System.Drawing.SizeF(0F, 0F);
-            this.pbxDraw.Size = new System.Drawing.Size(511, 478);
-            this.pbxDraw.TabIndex = 2;
-            this.pbxDraw.Text = "zoomPictureBox1";
-            this.pbxDraw.UseDrawPixelValue = true;
-            this.pbxDraw.Zoom = 1F;
-            this.pbxDraw.ZoomMax = 100F;
-            this.pbxDraw.ZoomMin = 0.1F;
-            this.pbxDraw.ZoomStep = 1.2F;
-            this.pbxDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.pbxDraw_Paint);
-            // 
-            // grdPrm
-            // 
-            this.grdPrm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grdPrm.HelpVisible = false;
-            this.grdPrm.Location = new System.Drawing.Point(6, 86);
-            this.grdPrm.Name = "grdPrm";
-            this.grdPrm.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.grdPrm.Size = new System.Drawing.Size(484, 349);
-            this.grdPrm.TabIndex = 36;
-            this.grdPrm.ToolbarVisible = false;
-            this.grdPrm.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.grdPrm_PropertyValueChanged);
+            this.rdoNearestNeighbor2Opt.AutoSize = true;
+            this.rdoNearestNeighbor2Opt.Location = new System.Drawing.Point(6, 64);
+            this.rdoNearestNeighbor2Opt.Name = "rdoNearestNeighbor2Opt";
+            this.rdoNearestNeighbor2Opt.Size = new System.Drawing.Size(173, 16);
+            this.rdoNearestNeighbor2Opt.TabIndex = 0;
+            this.rdoNearestNeighbor2Opt.Text = "Neighbor Nearest + 2-OPT";
+            this.rdoNearestNeighbor2Opt.UseVisualStyleBackColor = true;
+            this.rdoNearestNeighbor2Opt.Click += new System.EventHandler(this.rdoNoSort_Click);
             // 
             // FormMain
             // 
@@ -351,6 +363,7 @@
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.PropertyGrid grdPrm;
+        private System.Windows.Forms.RadioButton rdoNearestNeighbor2Opt;
     }
 }
 

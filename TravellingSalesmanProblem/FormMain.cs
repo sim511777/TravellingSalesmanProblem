@@ -129,6 +129,10 @@ namespace TravellingSalesmanProblem {
                 } else if (this.rdoNearestNeighbor.Checked) {
                     this.Log("==== Nearest Neighbor ====");
                     this.SortNearestNeighbor();
+                } else if (this.rdoNearestNeighbor2Opt.Checked) {
+                    this.Log("==== Nearest Neighbor + 2-OPT====");
+                    this.SortNearestNeighbor();
+                    this.Improve2Opt();
                 } else if (this.rdoGoogleRoute.Checked) {
                     string msg = string.Format("==== Google Route ====");
                     this.Log(msg);
@@ -143,17 +147,17 @@ namespace TravellingSalesmanProblem {
             var ms = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
             this.Log(string.Format("Calc Time  : {0}ms", ms));
 
-            float calcDist = CalcRouteDist();
+            float calcDist = CalcRouteDist(this.visitOrder);
             this.Log(string.Format("Route Dist : {0}", calcDist));
 
             this.pbxDraw.Invalidate();
         }
 
-        private float CalcRouteDist() {
+        private float CalcRouteDist(int[] order) {
             long fullDist = 0;
-            for (int i = 0; i < this.visitOrder.Length; i++) {
-                var ptIdx = this.visitOrder[i];
-                var ptIdxNext = this.visitOrder[(i+1) % this.visitOrder.Length];
+            for (int i = 0; i < order.Length; i++) {
+                var ptIdx = order[i];
+                var ptIdxNext = order[(i+1) % order.Length];
                 fullDist += this.dists[ptIdx, ptIdxNext];
             }
             return fullDist * 0.001f ;
@@ -182,6 +186,44 @@ namespace TravellingSalesmanProblem {
                 visitOrder[i + 1] = visitOrder[minIdx];
                 visitOrder[minIdx] = temp;
             }
+        }
+
+        void _2OptSwap(int[] existing_route, int[] new_route, int start, int end) {
+            //for (int i=0; i<existing_route.Length; i++) {
+            //    if (i>=start && i<=end)
+            //        new_route[i] = existing_route[end-(i-start)];
+            //    else
+            //        new_route[i] = existing_route[i];
+            //}
+            for (int i=0; i<start; i++)
+                new_route[i] = existing_route[i];
+            for (int i=start; i<=end; i++)
+                new_route[i] = existing_route[end-(i-start)];
+            for (int i=end+1; i<existing_route.Length; i++)
+                new_route[i] = existing_route[i];
+        }
+
+        private void Improve2Opt() {
+            int[] existing_route = new int[this.visitOrder.Length];
+            Array.Copy(visitOrder, existing_route, visitOrder.Length);
+            int[] new_route = new int[existing_route.Length];
+
+        start_again:
+            float best_distance = CalcRouteDist(existing_route);
+            for (int i = 1; i < existing_route.Length - 1; i++) {
+                for (int k = i + 1; k < existing_route.Length; k++) {
+                    _2OptSwap(existing_route, new_route, i, k);
+                    float new_distance = CalcRouteDist(new_route);
+                    if (new_distance < best_distance) {
+                        var temp = existing_route;
+                        existing_route = new_route;
+                        new_route = temp;
+                        goto start_again;
+                    }
+                }
+            }
+
+            Array.Copy(existing_route, this.visitOrder, existing_route.Length);
         }
 
         private void SortGoogleRoute(RoutingSearchParameters srcPrms) {
