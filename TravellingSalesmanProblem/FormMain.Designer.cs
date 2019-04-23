@@ -38,12 +38,12 @@
             this.btnClearLog = new System.Windows.Forms.Button();
             this.chkShowNumber = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.pbxDraw = new ShimLib.ZoomPictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.rdoNearestNeighbor2Opt = new System.Windows.Forms.RadioButton();
+            this.pbxDraw = new ShimLib.ZoomPictureBox();
             this.panel2.SuspendLayout();
             this.grpSorting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPoints)).BeginInit();
@@ -167,7 +167,7 @@
             this.numPoints.Size = new System.Drawing.Size(67, 21);
             this.numPoints.TabIndex = 1;
             this.numPoints.Value = new decimal(new int[] {
-            100,
+            200,
             0,
             0,
             0});
@@ -236,34 +236,6 @@
             this.panel3.Size = new System.Drawing.Size(513, 480);
             this.panel3.TabIndex = 3;
             // 
-            // pbxDraw
-            // 
-            this.pbxDraw.AutoDrawCenterLine = true;
-            this.pbxDraw.AutoDrawCursorPixelInfo = true;
-            this.pbxDraw.AxisXInvert = false;
-            this.pbxDraw.AxisXYFlip = false;
-            this.pbxDraw.AxisYInvert = false;
-            this.pbxDraw.BackColor = System.Drawing.Color.DarkGray;
-            this.pbxDraw.CenterLineColor = System.Drawing.Color.Yellow;
-            this.pbxDraw.CenterLineDotStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            this.pbxDraw.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbxDraw.DrawingImage = null;
-            this.pbxDraw.DrawPixelValueZoom = 20F;
-            this.pbxDraw.EnableMousePan = true;
-            this.pbxDraw.EnableWheelZoom = true;
-            this.pbxDraw.Location = new System.Drawing.Point(0, 0);
-            this.pbxDraw.Name = "pbxDraw";
-            this.pbxDraw.Pan = new System.Drawing.SizeF(0F, 0F);
-            this.pbxDraw.Size = new System.Drawing.Size(511, 478);
-            this.pbxDraw.TabIndex = 2;
-            this.pbxDraw.Text = "zoomPictureBox1";
-            this.pbxDraw.UseDrawPixelValue = true;
-            this.pbxDraw.Zoom = 1F;
-            this.pbxDraw.ZoomMax = 100F;
-            this.pbxDraw.ZoomMin = 0.1F;
-            this.pbxDraw.ZoomStep = 1.2F;
-            this.pbxDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.pbxDraw_Paint);
-            // 
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -315,6 +287,34 @@
             this.rdoNearestNeighbor2Opt.Text = "Neighbor Nearest + 2-OPT";
             this.rdoNearestNeighbor2Opt.UseVisualStyleBackColor = true;
             this.rdoNearestNeighbor2Opt.Click += new System.EventHandler(this.rdoNoSort_Click);
+            // 
+            // pbxDraw
+            // 
+            this.pbxDraw.AutoDrawCenterLine = true;
+            this.pbxDraw.AutoDrawCursorPixelInfo = true;
+            this.pbxDraw.AxisXInvert = false;
+            this.pbxDraw.AxisXYFlip = false;
+            this.pbxDraw.AxisYInvert = false;
+            this.pbxDraw.BackColor = System.Drawing.Color.DarkGray;
+            this.pbxDraw.CenterLineColor = System.Drawing.Color.Yellow;
+            this.pbxDraw.CenterLineDotStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            this.pbxDraw.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbxDraw.DrawingImage = null;
+            this.pbxDraw.DrawPixelValueZoom = 20F;
+            this.pbxDraw.EnableMousePan = true;
+            this.pbxDraw.EnableWheelZoom = true;
+            this.pbxDraw.Location = new System.Drawing.Point(0, 0);
+            this.pbxDraw.Name = "pbxDraw";
+            this.pbxDraw.Pan = new System.Drawing.SizeF(0F, 0F);
+            this.pbxDraw.Size = new System.Drawing.Size(511, 478);
+            this.pbxDraw.TabIndex = 2;
+            this.pbxDraw.Text = "zoomPictureBox1";
+            this.pbxDraw.UseDrawPixelValue = true;
+            this.pbxDraw.Zoom = 1F;
+            this.pbxDraw.ZoomMax = 100F;
+            this.pbxDraw.ZoomMin = 0.1F;
+            this.pbxDraw.ZoomStep = 1.2F;
+            this.pbxDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.pbxDraw_Paint);
             // 
             // FormMain
             // 
