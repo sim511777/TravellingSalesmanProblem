@@ -107,13 +107,13 @@ namespace TravellingSalesmanProblem {
             this.SortUpdate();
         }
 
-        private void CalcDistTable() {
-            double Dist(PointF pt1, PointF pt2) {
-                float dx = (pt2.X-pt1.X);
-                float dy = (pt2.Y-pt1.Y);
-                return Math.Sqrt(dx * dx + dy * dy);
-            }
+        double Dist(PointF pt1, PointF pt2) {
+               float dx = (pt2.X-pt1.X);
+               float dy = (pt2.Y-pt1.Y);
+               return Math.Sqrt(dx * dx + dy * dy);
+        }
 
+        private void CalcDistTable() {
             int num = this.points.Length;
             this.dists = new long[num * num];
             for (int i=0; i<num; i++) {
