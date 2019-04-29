@@ -22,16 +22,8 @@ namespace TravellingSalesmanProblem {
         int bw = 1000;
         int bh = 1000;
         PointF[] points = { PointF.Empty };
-        long[] dists = { 0 };
+        long[] distTable = { 0 };
         int[] visitOrder = { 0 };
-
-        private void btnResetZoom_Click(object sender, EventArgs e) {
-            this.pbxDraw.ZoomReset();
-        }
-        
-        private void btnFitZoom_Click(object sender, EventArgs e) {
-            this.pbxDraw.ZoomToRect(0, 0, bw, bh);
-        }
 
         private void Log(string text) {
             Action action = () => this.tbxLog.AppendText(text + Environment.NewLine);
@@ -41,12 +33,223 @@ namespace TravellingSalesmanProblem {
                 action();
         }
 
+        private void FillSquare(Graphics g, Brush br, PointF pt, float size) {
+            g.FillRectangle(br, pt.X-size/2, pt.Y-size/2, size, size);
+        }
+
+        private void GeneratePoints(int num, Random rnd) {
+           
+            this.points = new PointF[num];
+            this.points[0] = PointF.Empty;
+            for (int i = 1; i < this.points.Length; i++) {
+                this.points[i] = new PointF((float)(rnd.NextDouble() * (bw-1)), (float)(rnd.NextDouble() * (bh-1)));
+            }
+        }
+
+        private void CalcDistTable() {
+            double PointDistance(PointF pt1, PointF pt2) {
+                float dx = (pt2.X-pt1.X);
+                float dy = (pt2.Y-pt1.Y);
+                return Math.Sqrt(dx * dx + dy * dy);
+            }
+
+            int num = this.points.Length;
+            this.distTable = new long[num * num];
+            for (int i=0; i<num; i++) {
+                var ptI = this.points[i];
+                for (int j=0; j<num; j++) {
+                    var ptJ = this.points[j];
+                    this.distTable[i * num + j] = (long)(PointDistance(ptI, ptJ) * 1000);
+                    this.distTable[j * num + i] = (long)(PointDistance(ptJ, ptI) * 1000);
+                }
+            }
+        }
+
+        private void SortUpdate() {
+            var t0 = Stopwatch.GetTimestamp();
+            
+            try {
+                if (this.rdoNoSort.Checked) {
+                    this.Log("==== No Sort ====");
+                    this.NoSort();
+                }
+                else if (this.rdoNearestNeighbor.Checked) {
+                    this.Log("==== Nearest Neighbor ====");
+                    this.SortNearestNeighbor();
+                }
+                else if (this.rdo2Opt.Checked) {
+                    this.Log("==== 2-OPT ====");
+                    this.NoSort();
+                    this.Improve2Opt();
+                }
+                else if (this.rdo2OptNative.Checked) {
+                    this.Log("==== 2-OPT ====");
+                    this.NoSort();
+                    AlgDll.Improve2Opt(this.visitOrder, this.visitOrder.Length, this.distTable);
+                }
+                else if (this.rdoNearestNeighbor2Opt.Checked) {
+                    this.Log("==== Nearest Neighbor + 2-OPT====");
+                    this.SortNearestNeighbor();
+                    this.Improve2Opt();
+                }
+                else if (this.rdoNearestNeighbor2OptNative.Checked) {
+                    this.Log("==== Nearest Neighbor + 2-OPT====");
+                    this.SortNearestNeighbor();
+                    AlgDll.Improve2Opt(this.visitOrder, this.visitOrder.Length, this.distTable);
+                }
+                else if (this.rdoGoogleRoute.Checked) {
+                    string msg = string.Format("==== Google Route ====");
+                    this.Log(msg);
+                    RoutingSearchParameters srcPrms = (RoutingSearchParameters)this.grdPrm.SelectedObject;
+                    this.SortGoogleRoute(srcPrms);
+                }
+            } catch (Exception ex) {
+                this.visitOrder = new int[0];
+                this.Log(ex.ToString());
+            }
+            
+            var ms = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
+
+            float calcDist = CalcRouteDist(this.visitOrder);
+
+            this.Log(string.Format("Route Dist : {0}", calcDist));
+            this.Log(string.Format("Calc Time  : {0}ms", ms));
+
+            this.pbxDraw.Invalidate();
+        }
+
+        private float CalcRouteDist(int[] order) {
+            return CalcRouteDistLong(order) * 0.001f;
+        }
+
+        private long CalcRouteDistLong(int[] order) {
+            int num = order.Length;
+            long fullDist = 0;
+            for (int i = 0; i < order.Length; i++) {
+                var ptIdx = order[i];
+                var ptIdxNext = order[(i+1) % order.Length];
+                fullDist += this.distTable[ptIdx * num + ptIdxNext];
+            }
+            return fullDist;
+        }
+
+        private void NoSort() {
+            this.visitOrder = Enumerable.Range(0, this.points.Length).ToArray();
+        }
+
+        private void SortNearestNeighbor() {
+            this.visitOrder = Enumerable.Range(0, this.points.Length).ToArray();
+
+            int num = this.visitOrder.Length;
+
+            for (int i = 0; i < visitOrder.Length - 2; i++) {
+                var currPtIdx = visitOrder[i];
+                var minDist = float.MaxValue;
+                var minIdx = -1;
+                for (int j = i + 1; j < visitOrder.Length; j++) {
+                    var otherPtIdx = visitOrder[j];
+                    var dist = this.distTable[currPtIdx * num + otherPtIdx];
+                    if (dist < minDist) {
+                        minDist = dist;
+                        minIdx = j;
+                    }
+                }
+                int temp = visitOrder[i + 1];
+                visitOrder[i + 1] = visitOrder[minIdx];
+                visitOrder[minIdx] = temp;
+            }
+        }
+
+        private void Improve2Opt() {
+            void Swap2Opt(int[] route, int start, int end) {
+                for (int i=start, j=end; i<j; i++, j--) {
+                    int temp = route[i];
+                    route[i] = route[j];
+                    route[j] = temp;
+                }
+            }
+
+            int num = this.visitOrder.Length;
+            int[] bestRoute = (int[])this.visitOrder.Clone();
+            long bestDistance = CalcRouteDistLong(bestRoute);
+
+            bool improved;
+            do {
+                improved = false;
+                for (int i = 1; i < num - 1; i++) {
+                    for (int j = i + 1; j < num; j++) {
+                        long newDistance = bestDistance
+                            - this.distTable[bestRoute[i] * num + bestRoute[i-1]]
+                            - this.distTable[bestRoute[j] * num + bestRoute[(j+1) % num]]
+                            + this.distTable[bestRoute[j] * num + bestRoute[i-1]]
+                            + this.distTable[bestRoute[i] * num + bestRoute[(j+1) % num]];
+                        if (newDistance < bestDistance) {
+                            bestDistance = newDistance;
+                            Swap2Opt(bestRoute, i, j);
+                            improved = true;
+                            break;
+                        }
+                    }
+                    if (improved)
+                        break;
+                }
+            } while (improved);
+
+            Array.Copy(bestRoute, this.visitOrder, num);
+        }
+
+        private void SortGoogleRoute(RoutingSearchParameters srcPrms) {
+            this.visitOrder = TspCities.Run(this.distTable, this.points.Length, 1, 0, srcPrms);
+        }
+
+        private void DoBenchmark() {
+            Log("==== Benchmark Started ====");
+            Random rnd = new Random();
+            int[] pointNums = {100, 200, 500};
+            int benchNum = (int)numBenchMark.Value;
+            foreach (var pointNum in pointNums) {
+                this.Log(string.Format("== PointNum : {0}", pointNum));
+                for (int benchIndex = 0; benchIndex < benchNum; benchIndex++) {
+                    GeneratePoints(pointNum, rnd);
+                    CalcDistTable();
+
+                    long t0 = Stopwatch.GetTimestamp();
+                    SortNearestNeighbor();
+                    double ms0 = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
+                    float calcDist0 = CalcRouteDist(this.visitOrder);
+
+                    t0 = Stopwatch.GetTimestamp();
+                    SortNearestNeighbor();
+                    AlgDll.Improve2Opt(this.visitOrder, this.visitOrder.Length, this.distTable);
+                    double ms1 = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
+                    float calcDist1 = CalcRouteDist(this.visitOrder);
+
+                    t0 = Stopwatch.GetTimestamp();
+                    this.visitOrder = TspCities.Run(this.distTable, this.points.Length, 1, 0, (RoutingSearchParameters)this.grdPrm.SelectedObject);
+                    double ms2 = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
+                    float calcDist2 = CalcRouteDist(this.visitOrder);
+
+                    this.Log(string.Format("Greedy : {0}, Time : {1}ms / Greedy+2OPT : {2}, Time : {3}ms / GoogleRoute : {4}, Time : {5}ms", calcDist0, ms0, calcDist1, ms1, calcDist2, ms2));
+                } 
+            }
+            Log("==== Benchmark Finished ====");
+        }
+
+        // ==== event handler ====
         private void btnClearLog_Click(object sender, EventArgs e) {
             this.tbxLog.Clear();
         }
+        
+        private void chkShowNumber_CheckedChanged(object sender, EventArgs e) {
+            this.pbxDraw.Invalidate();
+        }
 
-        private void FillSquare(Graphics g, Brush br, PointF pt, float size) {
-            g.FillRectangle(br, pt.X-size/2, pt.Y-size/2, size, size);
+        private void btnResetZoom_Click(object sender, EventArgs e) {
+            this.pbxDraw.ZoomReset();
+        }
+        
+        private void btnFitZoom_Click(object sender, EventArgs e) {
+            this.pbxDraw.ZoomToRect(0, 0, bw, bh);
         }
 
         private void pbxDraw_Paint(object sender, PaintEventArgs e) {
@@ -77,19 +280,6 @@ namespace TravellingSalesmanProblem {
             }
         }
 
-        private void chkShowNumber_CheckedChanged(object sender, EventArgs e) {
-            this.pbxDraw.Invalidate();
-        }
-
-        private void GeneratePoints(int num, Random rnd) {
-           
-            this.points = new PointF[num];
-            this.points[0] = PointF.Empty;
-            for (int i = 1; i < this.points.Length; i++) {
-                this.points[i] = new PointF((float)(rnd.NextDouble() * (bw-1)), (float)(rnd.NextDouble() * (bh-1)));
-            }
-        }
-
         private void btnGenerateRandomPoints_Click(object sender, EventArgs e) {
             int num = (int)this.numPoints.Value;
             Random rnd = this.chkFixedSeed.Checked ? new Random(0) : new Random();
@@ -105,229 +295,6 @@ namespace TravellingSalesmanProblem {
 
         private void grdPrm_PropertyValueChanged(object s, PropertyValueChangedEventArgs e) {
             this.SortUpdate();
-        }
-
-        double Dist(PointF pt1, PointF pt2) {
-               float dx = (pt2.X-pt1.X);
-               float dy = (pt2.Y-pt1.Y);
-               return Math.Sqrt(dx * dx + dy * dy);
-        }
-
-        private void CalcDistTable() {
-            int num = this.points.Length;
-            this.dists = new long[num * num];
-            for (int i=0; i<num; i++) {
-                var ptI = this.points[i];
-                for (int j=0; j<num; j++) {
-                    var ptJ = this.points[j];
-                    this.dists[i * num + j] = (long)(Dist(ptI, ptJ) * 1000);
-                    this.dists[j * num + i] = (long)(Dist(ptJ, ptI) * 1000);
-                }
-            }
-        }
-
-        private void SortUpdate() {
-            var t0 = Stopwatch.GetTimestamp();
-            
-            try {
-                if (this.rdoNoSort.Checked) {
-                    this.Log("==== No Sort ====");
-                    this.NoSort();
-                }
-                else if (this.rdoNearestNeighbor.Checked) {
-                    this.Log("==== Nearest Neighbor ====");
-                    this.SortNearestNeighbor();
-                }
-                else if (this.rdo2Opt.Checked) {
-                    this.Log("==== 2-OPT ====");
-                    this.NoSort();
-                    this.Improve2OptNew();
-                }
-                else if (this.rdo2OptNative.Checked) {
-                    this.Log("==== 2-OPT ====");
-                    this.NoSort();
-                    AlgDll.Improve2OptNew(this.visitOrder, this.visitOrder.Length, this.dists);
-                }
-                else if (this.rdoNearestNeighbor2Opt.Checked) {
-                    this.Log("==== Nearest Neighbor + 2-OPT====");
-                    this.SortNearestNeighbor();
-                    this.Improve2OptNew();
-                }
-                else if (this.rdoNearestNeighbor2OptNative.Checked) {
-                    this.Log("==== Nearest Neighbor + 2-OPT====");
-                    this.SortNearestNeighbor();
-                    AlgDll.Improve2OptNew(this.visitOrder, this.visitOrder.Length, this.dists);
-                }
-                else if (this.rdoGoogleRoute.Checked) {
-                    string msg = string.Format("==== Google Route ====");
-                    this.Log(msg);
-                    RoutingSearchParameters srcPrms = (RoutingSearchParameters)this.grdPrm.SelectedObject;
-                    this.SortGoogleRoute(srcPrms);
-                }
-            } catch (Exception ex) {
-                this.visitOrder = new int[0];
-                this.Log(ex.ToString());
-            }
-            
-            var ms = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
-
-            float calcDist = CalcRouteDist(this.visitOrder);
-
-            this.Log(string.Format("Route Dist : {0}", calcDist));
-            this.Log(string.Format("Calc Time  : {0}ms", ms));
-
-            this.pbxDraw.Invalidate();
-        }
-
-        private float CalcRouteDist(int[] order) {
-            int num = order.Length;
-            long fullDist = 0;
-            for (int i = 0; i < order.Length; i++) {
-                var ptIdx = order[i];
-                var ptIdxNext = order[(i+1) % order.Length];
-                fullDist += this.dists[ptIdx * num + ptIdxNext];
-            }
-            return fullDist * 0.001f ;
-        }
-
-        private void NoSort() {
-            this.visitOrder = Enumerable.Range(0, this.points.Length).ToArray();
-        }
-
-        private void SortNearestNeighbor() {
-            this.visitOrder = Enumerable.Range(0, this.points.Length).ToArray();
-
-            int num = this.visitOrder.Length;
-
-            for (int i = 0; i < visitOrder.Length - 2; i++) {
-                var currPtIdx = visitOrder[i];
-                var minDist = float.MaxValue;
-                var minIdx = -1;
-                for (int j = i + 1; j < visitOrder.Length; j++) {
-                    var otherPtIdx = visitOrder[j];
-                    var dist = this.dists[currPtIdx * num + otherPtIdx];
-                    if (dist < minDist) {
-                        minDist = dist;
-                        minIdx = j;
-                    }
-                }
-                int temp = visitOrder[i + 1];
-                visitOrder[i + 1] = visitOrder[minIdx];
-                visitOrder[minIdx] = temp;
-            }
-        }
-
-        void _2OptSwap(int[] existing_route, int[] new_route, int start, int end) {
-            for (int i=0; i<start; i++)
-                new_route[i] = existing_route[i];
-            for (int i=start; i<=end; i++)
-                new_route[i] = existing_route[end-(i-start)];
-            for (int i=end+1; i<existing_route.Length; i++)
-                new_route[i] = existing_route[i];
-        }
-
-        private void Improve2Opt() {
-            int[] existing_route = new int[this.visitOrder.Length];
-            Array.Copy(visitOrder, existing_route, visitOrder.Length);
-            int[] new_route = new int[existing_route.Length];
-
-            float best_distance = CalcRouteDist(existing_route);
-        start_again:
-            for (int i = 1; i < existing_route.Length - 1; i++) {
-                for (int j = i + 1; j < existing_route.Length; j++) {
-                    _2OptSwap(existing_route, new_route, i, j);
-                    float new_distance = CalcRouteDist(new_route);
-                    if (new_distance < best_distance) {
-                        best_distance = new_distance;
-                        var temp = existing_route;
-                        existing_route = new_route;
-                        new_route = temp;
-                        goto start_again;
-                    }
-                }
-            }
-
-            Array.Copy(existing_route, this.visitOrder, existing_route.Length);
-        }
-
-        void _2OptSwapSelf(int[] route, int start, int end) {
-            for (int i=start, j=end; i<j; i++, j--) {
-                int temp = route[i];
-                route[i] = route[j];
-                route[j] = temp;
-            }
-        }
-
-        private long CalcRouteDistLong(int[] order) {
-            int num = order.Length;
-            long fullDist = 0;
-            for (int i = 0; i < order.Length; i++) {
-                var ptIdx = order[i];
-                var ptIdxNext = order[(i+1) % order.Length];
-                fullDist += this.dists[ptIdx * num + ptIdxNext];
-            }
-            return fullDist;
-        }
-
-        private void Improve2OptNew() {
-            int num = this.visitOrder.Length;
-            int[] best_route = (int[])this.visitOrder.Clone();
-            long best_distance = CalcRouteDistLong(best_route);
-
-        start_again:
-            for (int i = 1; i < num - 1; i++) {
-                for (int j = i + 1; j < num; j++) {
-                    long new_distance = best_distance
-                        - this.dists[best_route[i] * num + best_route[i-1]]
-                        - this.dists[best_route[j] * num + best_route[(j+1) % num]]
-                        + this.dists[best_route[j] * num + best_route[i-1]]
-                        + this.dists[best_route[i] * num + best_route[(j+1) % num]];
-                    if (new_distance < best_distance) {
-                        best_distance = new_distance;
-                        _2OptSwapSelf(best_route, i, j);
-                        goto start_again;
-                    }
-                }
-            }
-
-            Array.Copy(best_route, this.visitOrder, num);
-        }
-
-        private void SortGoogleRoute(RoutingSearchParameters srcPrms) {
-            this.visitOrder = TspCities.Run(this.dists, this.points.Length, 1, 0, srcPrms);
-        }
-
-        private void DoBenchmark() {
-            Log("==== Benchmark Started ====");
-            Random rnd = new Random();
-            int[] pointNums = {100, 200, 500};
-            int benchNum = (int)numBenchMark.Value;
-            foreach (var pointNum in pointNums) {
-                this.Log(string.Format("== PointNum : {0}", pointNum));
-                for (int benchIndex = 0; benchIndex < benchNum; benchIndex++) {
-                    GeneratePoints(pointNum, rnd);
-                    CalcDistTable();
-
-                    long t0 = Stopwatch.GetTimestamp();
-                    SortNearestNeighbor();
-                    double ms0 = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
-                    float calcDist0 = CalcRouteDist(this.visitOrder);
-
-                    t0 = Stopwatch.GetTimestamp();
-                    SortNearestNeighbor();
-                    AlgDll.Improve2Opt(this.visitOrder, this.visitOrder.Length, this.dists);
-                    double ms1 = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
-                    float calcDist1 = CalcRouteDist(this.visitOrder);
-
-                    t0 = Stopwatch.GetTimestamp();
-                    this.visitOrder = TspCities.Run(this.dists, this.points.Length, 1, 0, (RoutingSearchParameters)this.grdPrm.SelectedObject);
-                    double ms2 = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
-                    float calcDist2 = CalcRouteDist(this.visitOrder);
-
-                    this.Log(string.Format("Greedy : {0}, Time : {1}ms / Greedy+2OPT : {2}, Time : {3}ms / GoogleRoute : {4}, Time : {5}ms", calcDist0, ms0, calcDist1, ms1, calcDist2, ms2));
-                } 
-            }
-            Log("==== Benchmark Finished ====");
         }
 
         private async void btnBenchmark_Click(object sender, EventArgs e) {
