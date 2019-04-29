@@ -10,5 +10,6 @@ namespace TravellingSalesmanProblem {
         const string dll = "Alg.dll";
         [DllImport(dll)] public static extern int Add(int a, int b);
         [DllImport(dll)] public static extern void Improve2Opt([In, Out] int[] visitOrder, int num, [In] long[] dists);
+        [DllImport(dll)] public static extern void Improve2OptNew([In, Out] int[] visitOrder, int num, [In] long[] dists);
     }
 }

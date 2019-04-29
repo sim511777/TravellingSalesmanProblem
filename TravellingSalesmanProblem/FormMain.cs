@@ -141,22 +141,22 @@ namespace TravellingSalesmanProblem {
                 else if (this.rdo2Opt.Checked) {
                     this.Log("==== 2-OPT ====");
                     this.NoSort();
-                    this.Improve2Opt();
+                    this.Improve2OptNew();
                 }
                 else if (this.rdo2OptNative.Checked) {
                     this.Log("==== 2-OPT ====");
                     this.NoSort();
-                    AlgDll.Improve2Opt(this.visitOrder, this.visitOrder.Length, this.dists);
+                    AlgDll.Improve2OptNew(this.visitOrder, this.visitOrder.Length, this.dists);
                 }
                 else if (this.rdoNearestNeighbor2Opt.Checked) {
                     this.Log("==== Nearest Neighbor + 2-OPT====");
                     this.SortNearestNeighbor();
-                    this.Improve2Opt();
+                    this.Improve2OptNew();
                 }
                 else if (this.rdoNearestNeighbor2OptNative.Checked) {
                     this.Log("==== Nearest Neighbor + 2-OPT====");
                     this.SortNearestNeighbor();
-                    AlgDll.Improve2Opt(this.visitOrder, this.visitOrder.Length, this.dists);
+                    AlgDll.Improve2OptNew(this.visitOrder, this.visitOrder.Length, this.dists);
                 }
                 else if (this.rdoGoogleRoute.Checked) {
                     string msg = string.Format("==== Google Route ====");
@@ -234,8 +234,8 @@ namespace TravellingSalesmanProblem {
             float best_distance = CalcRouteDist(existing_route);
         start_again:
             for (int i = 1; i < existing_route.Length - 1; i++) {
-                for (int k = i + 1; k < existing_route.Length; k++) {
-                    _2OptSwap(existing_route, new_route, i, k);
+                for (int j = i + 1; j < existing_route.Length; j++) {
+                    _2OptSwap(existing_route, new_route, i, j);
                     float new_distance = CalcRouteDist(new_route);
                     if (new_distance < best_distance) {
                         best_distance = new_distance;
@@ -248,6 +248,49 @@ namespace TravellingSalesmanProblem {
             }
 
             Array.Copy(existing_route, this.visitOrder, existing_route.Length);
+        }
+
+        void _2OptSwapSelf(int[] route, int start, int end) {
+            for (int i=start, j=end; i<j; i++, j--) {
+                int temp = route[i];
+                route[i] = route[j];
+                route[j] = temp;
+            }
+        }
+
+        private long CalcRouteDistLong(int[] order) {
+            int num = order.Length;
+            long fullDist = 0;
+            for (int i = 0; i < order.Length; i++) {
+                var ptIdx = order[i];
+                var ptIdxNext = order[(i+1) % order.Length];
+                fullDist += this.dists[ptIdx * num + ptIdxNext];
+            }
+            return fullDist;
+        }
+
+        private void Improve2OptNew() {
+            int num = this.visitOrder.Length;
+            int[] best_route = (int[])this.visitOrder.Clone();
+            long best_distance = CalcRouteDistLong(best_route);
+
+        start_again:
+            for (int i = 1; i < num - 1; i++) {
+                for (int j = i + 1; j < num; j++) {
+                    long new_distance = best_distance
+                        - this.dists[best_route[i] * num + best_route[i-1]]
+                        - this.dists[best_route[j] * num + best_route[(j+1) % num]]
+                        + this.dists[best_route[j] * num + best_route[i-1]]
+                        + this.dists[best_route[i] * num + best_route[(j+1) % num]];
+                    if (new_distance < best_distance) {
+                        best_distance = new_distance;
+                        _2OptSwapSelf(best_route, i, j);
+                        goto start_again;
+                    }
+                }
+            }
+
+            Array.Copy(best_route, this.visitOrder, num);
         }
 
         private void SortGoogleRoute(RoutingSearchParameters srcPrms) {

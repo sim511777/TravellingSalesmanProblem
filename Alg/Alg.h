@@ -12,3 +12,4 @@
 
 ALG_API int Add(int a, int b);
 ALG_API void Improve2Opt(int* visitOrder, int num, __int64* dists);
+ALG_API void Improve2OptNew(int* visitOrder, int num, __int64* dists);
