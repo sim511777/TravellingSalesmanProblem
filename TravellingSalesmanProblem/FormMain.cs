@@ -217,17 +217,20 @@ namespace TravellingSalesmanProblem {
                     SortNearestNeighbor();
                     double ms0 = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
                     float calcDist0 = CalcRouteDist(this.visitOrder);
+                    this.pbxDraw.Invalidate();
 
                     t0 = Stopwatch.GetTimestamp();
                     SortNearestNeighbor();
                     AlgDll.Improve2Opt(this.visitOrder, this.visitOrder.Length, this.distTable);
                     double ms1 = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
                     float calcDist1 = CalcRouteDist(this.visitOrder);
+                    this.pbxDraw.Invalidate();
 
                     t0 = Stopwatch.GetTimestamp();
                     this.visitOrder = TspCities.Run(this.distTable, this.points.Length, 1, 0, (RoutingSearchParameters)this.grdPrm.SelectedObject);
                     double ms2 = (Stopwatch.GetTimestamp() - t0) / (double)Stopwatch.Frequency * 1000;
                     float calcDist2 = CalcRouteDist(this.visitOrder);
+                    this.pbxDraw.Invalidate();
 
                     this.Log(string.Format("Greedy : {0}, Time : {1}ms / Greedy+2OPT : {2}, Time : {3}ms / GoogleRoute : {4}, Time : {5}ms", calcDist0, ms0, calcDist1, ms1, calcDist2, ms2));
                 } 
