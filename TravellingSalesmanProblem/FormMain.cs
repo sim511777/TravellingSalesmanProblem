@@ -303,5 +303,22 @@ namespace TravellingSalesmanProblem {
         private async void btnBenchmark_Click(object sender, EventArgs e) {
             await Task.Run(() => DoBenchmark());
         }
-    }
+
+      private void btnGenExample_Click(object sender, EventArgs e) {
+         this.points = new PointF[10];
+         this.points[0] = new PointF(0, 0);
+         this.points[1] = new PointF(750, 0);
+         this.points[2] = new PointF(1000, 250);
+         this.points[3] = new PointF(1000, 750);
+         this.points[4] = new PointF(750, 1000);
+         this.points[5] = new PointF(0, 1000);
+         this.points[6] = new PointF(0, 750);
+         this.points[7] = new PointF(750, 750);
+         this.points[8] = new PointF(750, 250);
+         this.points[9] = new PointF(0, 250);
+         
+         this.CalcDistTable();
+         this.SortUpdate();
+      }
+   }
 }
